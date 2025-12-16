@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OptaNex - Complete Eye Care Companion</title>
+    <meta name="description" content="Track your eye health, monitor screen time, and protect your vision with our comprehensive suite of AI-powered tools." />
+    <meta name="author" content="OptaNex" />
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="OptaNex" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" /> 
+     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" /> 
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="OptaNex - Complete Eye Care Companion" />
+    <meta property="og:description" content="Track your eye health, monitor screen time, and protect your vision with our comprehensive suite of AI-powered tools." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://optanex.com/og-image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="OptaNex - Complete Eye Care Companion" />
+    <meta name="twitter:description" content="Track your eye health, monitor screen time, and protect your vision with our comprehensive suite of AI-powered tools." />
+    <meta name="twitter:image" content="https://optanex.com/og-image.png" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // PWA install prompt
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

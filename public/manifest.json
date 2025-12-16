@@ -1,0 +1,93 @@
+{
+    "id": "/",
+    "scope": "/",
+    "name": "OptaNex - Complete Eye Care Companion",
+    "short_name": "OptaNex",
+    "description": "Track your eye health, monitor screen time, and protect your vision with our comprehensive suite of AI-powered tools.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#3b82f6",
+    "orientation": "portrait-primary",
+    "categories": ["health", "medical", "lifestyle"],
+  "icons": [
+  { "src": "/android-chrome-48x48.png", "sizes": "48x48", "type": "image/png" },
+ 
+
+  { "src": "/android-chrome-72x72.png", "sizes": "72x72", "type": "image/png" },
+
+
+  { "src": "/android-chrome-96x96.png", "sizes": "96x96", "type": "image/png" },
+
+
+  { "src": "/android-chrome-128x128.png", "sizes": "128x128", "type": "image/png" },
+
+
+  { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+
+
+  { "src": "/android-chrome-256x256.png", "sizes": "256x256", "type": "image/png" },
+
+
+  { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" },
+
+
+  { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+],
+
+  
+    "screenshots": [
+      {
+        "src": "/public/home-screen-1280x720.png",
+        "sizes": "1280x720",
+        "type": "image/png",
+        "form_factor": "wide"
+      },
+      {
+        "src": "/public/optiscreen-640x1136.png",
+        "sizes": "640x1136",
+        "type": "image/png"
+      },
+      {
+        "src": "/public/optitrack-1080x1920.png",
+        "sizes": "1080x1920",
+        "type": "image/png"
+      },
+      {
+        "src": "/public/glare-guard-1080x1920.png",
+        "sizes": "1080x1920",
+        "type": "image/png"
+      }
+    ],
+  
+    "shortcuts": [
+      {
+        "name": "Eye Screening",
+        "short_name": "Screening",
+        "description": "AI-powered eye screening tests",
+        "url": "/optiscreen",
+        "icons": [
+          { "src": "/public/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }
+        ]
+      },
+      {
+        "name": "Track Eye Power",
+        "short_name": "Track",
+        "description": "Monitor your eye power trends",
+        "url": "/optitrack",
+        "icons": [
+          { "src": "/public/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }
+        ]
+      },
+      {
+        "name": "Blue Light Protection",
+        "short_name": "GlareGuard",
+        "description": "Blue light exposure tracking",
+        "url": "/glareguard",
+        "icons": [
+          { "src": "/public/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }
+        ]
+      }
+    ]
+  }
+  
