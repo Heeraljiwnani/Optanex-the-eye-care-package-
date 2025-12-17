@@ -6,15 +6,16 @@ import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  Eye, 
-  Calendar as CalendarIcon, 
-  Plus, 
+import {
+  TrendingUp,
+  TrendingDown,
+  Eye,
+  Calendar as CalendarIcon,
+  Plus,
   BarChart3,
   Activity,
-  Minus
+  Minus,
+  Trash2
 } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -96,13 +97,42 @@ export default function Optitrack() {
         rightAstigmatism: "",
         notes: ""
       });
-      
+
       fetchPowerHistory();
     } catch (error) {
       console.error('Error adding record:', error);
       toast({
         title: "Error",
         description: "Failed to add eye power record",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleDeleteEntry = async (entryId: string) => {
+    if (!confirm('Are you sure you want to delete this eye power record? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('eye_power_records')
+        .delete()
+        .eq('id', entryId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Eye power record deleted successfully"
+      });
+
+      fetchPowerHistory();
+    } catch (error) {
+      console.error('Error deleting record:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete eye power record",
         variant: "destructive"
       });
     }
@@ -256,7 +286,7 @@ export default function Optitrack() {
                       {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  <PopoverContent className="w-auto p-0 bg-background border border-border rounded-md shadow-lg" align="start">
                     <Calendar
                       mode="single"
                       selected={selectedDate}
@@ -351,28 +381,38 @@ export default function Optitrack() {
               <p className="text-center text-muted-foreground">No records found. Add your first reading!</p>
             ) : (
               powerHistory.map((entry, index) => (
-                <div key={entry.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                <div key={entry.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg group">
                   <div className="flex items-center gap-4">
                     <div className="text-center">
                       <p className="text-sm text-muted-foreground">Date</p>
                       <p className="font-semibold">{format(new Date(entry.checkup_date), "MMM dd, yyyy")}</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-8 text-center">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Left Eye</p>
-                      <p className="text-lg font-bold">{entry.left_eye_power || '--'}D</p>
-                      {entry.left_eye_cylinder && (
-                        <p className="text-xs text-muted-foreground">Astig: {entry.left_eye_cylinder}D</p>
-                      )}
+                  <div className="flex items-center gap-8">
+                    <div className="grid grid-cols-2 gap-8 text-center">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Left Eye</p>
+                        <p className="text-lg font-bold">{entry.left_eye_power || '--'}D</p>
+                        {entry.left_eye_cylinder && (
+                          <p className="text-xs text-muted-foreground">Astig: {entry.left_eye_cylinder}D</p>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Right Eye</p>
+                        <p className="text-lg font-bold">{entry.right_eye_power || '--'}D</p>
+                        {entry.right_eye_cylinder && (
+                          <p className="text-xs text-muted-foreground">Astig: {entry.right_eye_cylinder}D</p>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Right Eye</p>
-                      <p className="text-lg font-bold">{entry.right_eye_power || '--'}D</p>
-                      {entry.right_eye_cylinder && (
-                        <p className="text-xs text-muted-foreground">Astig: {entry.right_eye_cylinder}D</p>
-                      )}
-                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDeleteEntry(entry.id)}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
                 </div>
               ))

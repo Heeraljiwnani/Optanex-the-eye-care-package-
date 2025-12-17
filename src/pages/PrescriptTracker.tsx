@@ -5,9 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Upload, 
-  FileImage, 
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import {
+  Upload,
+  FileImage,
   Calendar,
   Eye,
   User,
@@ -15,9 +17,11 @@ import {
   Clock,
   Trash2,
   Download,
-  Search
+  Search,
+  Calendar as CalendarIcon
 } from "lucide-react";
 import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -32,6 +36,7 @@ export default function PrescriptTracker() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [prescriptions, setPrescriptions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [formData, setFormData] = useState({
     doctorName: "",
     clinic: "",
@@ -94,7 +99,7 @@ export default function PrescriptTracker() {
   };
 
   const handleUpload = async () => {
-    if (!selectedFile || !formData.doctorName || !formData.date) return;
+    if (!selectedFile || !formData.doctorName || !selectedDate) return;
 
     try {
       // Upload file to Supabase storage
@@ -115,7 +120,7 @@ export default function PrescriptTracker() {
           user_id: user?.id,
           doctor_name: formData.doctorName,
           clinic_name: formData.clinic,
-          prescription_date: formData.date,
+          prescription_date: format(selectedDate, 'yyyy-MM-dd'),
           image_url: filePath,
           notes: formData.notes
         });
@@ -127,20 +132,56 @@ export default function PrescriptTracker() {
         description: "Prescription uploaded successfully"
       });
 
-      setShowUploadForm(false);
-      setSelectedFile(null);
-      setFormData({
-        doctorName: "",
-        clinic: "",
-        date: "",
-        type: "Glasses Prescription",
-        notes: ""
-      });
+      // Reload the page to show updated data
+      window.location.reload();
     } catch (error) {
       console.error('Error uploading prescription:', error);
       toast({
         title: "Error",
         description: "Failed to upload prescription",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleDeletePrescription = async (prescriptionId: string, imageUrl: string) => {
+    if (!confirm('Are you sure you want to delete this prescription? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      // Delete file from storage
+      if (imageUrl) {
+        const { error: storageError } = await supabase.storage
+          .from('prescriptions')
+          .remove([imageUrl]);
+
+        if (storageError) {
+          console.error('Error deleting file from storage:', storageError);
+          // Continue with database deletion even if storage deletion fails
+        }
+      }
+
+      // Delete record from database
+      const { error: dbError } = await supabase
+        .from('prescriptions')
+        .delete()
+        .eq('id', prescriptionId);
+
+      if (dbError) throw dbError;
+
+      toast({
+        title: "Success",
+        description: "Prescription deleted successfully"
+      });
+
+      // Reload the page to show updated data
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting prescription:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete prescription",
         variant: "destructive"
       });
     }
@@ -260,13 +301,30 @@ export default function PrescriptTracker() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="date">Date of Prescription *</Label>
-                  <Input
-                    id="date"
-                    type="date"
-                    value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                  />
+                  <Label>Date of Prescription *</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !selectedDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 bg-background border border-border rounded-md shadow-lg" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={setSelectedDate}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
 
                 <div className="space-y-2">
@@ -337,7 +395,7 @@ export default function PrescriptTracker() {
               <Button 
                 onClick={handleUpload} 
                 className="flex-1"
-                disabled={!selectedFile || !formData.doctorName || !formData.date}
+                disabled={!selectedFile || !formData.doctorName || !selectedDate}
               >
                 Upload Prescription
               </Button>
@@ -435,7 +493,12 @@ export default function PrescriptTracker() {
                       <Button variant="outline" size="sm">
                         <Download className="h-4 w-4" />
                       </Button>
-                      <Button variant="outline" size="sm" className="text-destructive hover:text-destructive">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-destructive hover:text-destructive"
+                        onClick={() => handleDeletePrescription(prescription.id, prescription.image_url)}
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>

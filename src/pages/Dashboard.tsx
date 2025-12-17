@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  Eye, 
-  Scan, 
-  BarChart3, 
-  FileImage, 
-  History, 
-  Shield, 
-  ArrowRight, 
-  Activity, 
-  Users, 
-  TrendingUp 
+import {
+  Eye,
+  Scan,
+  BarChart3,
+  FileImage,
+  History,
+  Shield,
+  ArrowRight,
+  Activity,
+  Users,
+  TrendingUp
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -85,29 +86,12 @@ export default function Dashboard() {
         .order('checkup_date', { ascending: false })
         .limit(1);
 
-      // Fetch latest medical history for last checkup
-      const { data: medicalData } = await supabase
-        .from('medical_history')
-        .select('*')
-        .eq('user_id', user?.id)
-        .order('diagnosis_date', { ascending: false })
-        .limit(1);
-
-      // Calculate days since last checkup
+      // Get last checkup date in same format as Optitrack
       const getLastCheckupText = () => {
-        if (!medicalData?.[0]?.diagnosis_date) return "No checkups yet";
-        
-        const checkupDate = new Date(medicalData[0].diagnosis_date);
-        const today = new Date();
-        const diffTime = Math.abs(today.getTime() - checkupDate.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
-        if (diffDays === 0) return "Today";
-        if (diffDays === 1) return "Yesterday";
-        if (diffDays <= 7) return `${diffDays} days ago`;
-        if (diffDays <= 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-        if (diffDays <= 365) return `${Math.floor(diffDays / 30)} months ago`;
-        return `${Math.floor(diffDays / 365)} years ago`;
+        if (!eyePowerData?.[0]?.checkup_date) return "No checkups yet";
+
+        const checkupDate = new Date(eyePowerData[0].checkup_date);
+        return format(checkupDate, "MMM dd, yyyy");
       };
 
       // Fetch screening results for health score
