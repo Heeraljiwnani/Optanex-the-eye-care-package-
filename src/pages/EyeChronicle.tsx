@@ -13,11 +13,12 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar"; // your UI Calendar component
 
-import { History, Calendar as CalendarIcon, User, FileText, Plus, Eye } from "lucide-react"; // renamed lucide Calendar
+import { History, Calendar as CalendarIcon, User, FileText, Plus, Eye, Trash2 } from "lucide-react"; // renamed lucide Calendar
 
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -109,6 +110,36 @@ export default function EyeChronicle() {
       });
     }
   };
+
+  const handleDeleteRecord = async (recordId: string) => {
+    if (!confirm('Are you sure you want to delete this medical record? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('medical_history')
+        .delete()
+        .eq('id', recordId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Medical record deleted successfully"
+      });
+
+      fetchMedicalHistory();
+    } catch (error) {
+      console.error('Error deleting record:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete medical record",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="p-6 space-y-8">
       <div className="flex items-center justify-between">
@@ -143,7 +174,7 @@ export default function EyeChronicle() {
                       {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  <PopoverContent className="w-auto p-0 bg-background border border-border rounded-md shadow-lg" align="start">
                     <Calendar
                       mode="single"
                       selected={selectedDate}
@@ -186,12 +217,15 @@ export default function EyeChronicle() {
               
               <div className="space-y-2">
                 <Label htmlFor="status">Status</Label>
-                <Input
-                  id="status"
-                  value={formData.status}
-                  onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  placeholder="e.g., Ongoing, Resolved"
-                />
+                <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ongoing">Ongoing</SelectItem>
+                    <SelectItem value="resolved">Resolved</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               
               <div className="space-y-2">
@@ -238,7 +272,7 @@ export default function EyeChronicle() {
           <p className="text-center text-muted-foreground">No medical records found. Add your first record!</p>
         ) : (
           medicalHistory.map((record) => (
-            <Card key={record.id} className="bg-gradient-card border-0 shadow-custom-sm">
+            <Card key={record.id} className="bg-gradient-card border-0 shadow-custom-sm group">
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -252,7 +286,17 @@ export default function EyeChronicle() {
                       </p>
                     </div>
                   </div>
-                  {record.status && <Badge variant="secondary">{record.status}</Badge>}
+                  <div className="flex items-center gap-2">
+                    {record.status && <Badge variant="secondary">{record.status}</Badge>}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDeleteRecord(record.id)}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
