@@ -155,11 +155,18 @@ export default function Dashboard() {
       Your complete eye care companion. Monitor, track, and maintain your vision
       health with AI-powered tools and comprehensive analytics.
     </p>
+    <div className="flex gap-4">
     <Button size="lg" variant="secondary" asChild>
       <Link to="/optiscreen">
         Start Eye Screening <ArrowRight className="ml-2 h-5 w-5" />
       </Link>
     </Button>
+    <Button size ="lg" variant="glass" asChild>
+    <Link to="/optitrack">
+      Manage your Eye-care <ArrowRight className="ml-2 h-5 w-5" />
+      </Link>
+    </Button>
+    </div>
   </div>
 
   {/* Decorative blobs remain outside the box */}
@@ -178,9 +185,23 @@ export default function Dashboard() {
                   <p className="text-sm text-muted-foreground">{stat.label}</p>
                   <p className="text-2xl font-bold text-foreground">{stat.value}</p>
                 </div>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <stat.icon className="h-6 w-6 text-primary" />
-                </div>
+                <div className="w-12 h-12 bg-primary/15 rounded-lg flex items-center justify-center">
+                <stat.icon
+  strokeWidth={2.5}
+  className="
+    h-6 w-6
+    text-[#4DA3FF]
+    drop-shadow-[0_0_6px_rgba(77,163,255,0.9)]
+    drop-shadow-[0_0_16px_rgba(77,163,255,0.7)]
+    drop-shadow-[0_0_32px_rgba(77,163,255,0.5)]
+  "
+/>
+
+
+</div>
+
+
+
               </div>
             </CardContent>
           </Card>

@@ -44,7 +44,7 @@ export function AppSidebar() {
   const isActive = (path: string) => currentPath === path;
   const getNavCls = (active: boolean) =>
     active 
-      ? "bg-primary text-primary-foreground font-medium shadow-custom-sm" 
+      ? " text-primary-foreground font-medium shadow-custom-sm" 
       : "hover:bg-muted/70 transition-colors";
 
   return (

@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { SplashScreen } from "@/components/SplashScreen";
 import { AuthDialog } from "@/components/AuthDialog";
 import { AnimatePresence, motion } from "framer-motion";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -62,6 +63,7 @@ export function Layout({ children }: LayoutProps) {
                   </div>
 
                   <div className="flex items-center gap-2">
+                  <ThemeToggle />
                     <div className="text-right hidden sm:block">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <User className="h-4 w-4" />

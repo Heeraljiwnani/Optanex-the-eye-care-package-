@@ -32,8 +32,9 @@ All colors MUST be HSL.
     --muted: 215 20% 95%;
     --muted-foreground: 215 15% 50%;
 
-    --accent: 45 100% 55%;
-    --accent-foreground: 215 25% 15%;
+    --accent: 201, 35%, 66%
+    ;
+    --accent-foreground: hsl(201, 35%, 66%)    ;
     --accent-muted: 45 50% 90%;
 
     --destructive: 0 85% 60%;
@@ -100,6 +101,12 @@ All colors MUST be HSL.
     --prescripttracker:264, 27%, 11%;
     --eyechronical:120, 2%, 20%;
     --glareguard:225, 40%, 18%;
+    --colorblindness:225, 26%, 21%;
+    --snellentest:351, 54%, 20%;
+     
+        /* special text-gradient*/
+        --gradient-head: linear-gradient(135deg, hsl(210 100% 50%), hsl(225, 69%, 73%));
+
   }
 
   .dark {
@@ -148,5 +155,12 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}@layer utilities {
+  .text-gradient-head {
+    background-image: var(--gradient-head);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }
