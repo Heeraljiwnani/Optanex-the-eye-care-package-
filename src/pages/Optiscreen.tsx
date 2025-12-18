@@ -131,7 +131,7 @@ export default function Optiscreen() {
       <span className="text-muted-foreground">›</span>
 
       <span className="text-gradient-head">
-        Optiscreen
+        OptiScreen
       </span>
     </h1>
 
@@ -258,7 +258,7 @@ export default function Optiscreen() {
                   
                   <Card className="bg-primary/5 border-primary/20">
                     <CardContent className="p-4">
-                      <h4 className="font-semibold text-primary mb-2">Before Starting</h4>
+                      <h4 className="font-semibold text-black dark:text-white mb-2">Before Starting</h4>
                       <ul className="text-sm space-y-1 text-muted-foreground">
                         <li>• Ensure good lighting conditions</li>
                         <li>• Clean your camera lens</li>
@@ -273,6 +273,7 @@ export default function Optiscreen() {
               <div className="flex gap-4 pt-4 border-t">
                 <Button 
                   size="lg" 
+                  variant="outline"
                   className="flex-1"
                   onClick={() => handleStartTest(selectedTestData.id)}
                 >
@@ -280,7 +281,7 @@ export default function Optiscreen() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button 
-                  variant="outline" 
+                  variant="secondary" 
                   size="lg"
                   onClick={() => setShowSymptoms(null)}
                 >

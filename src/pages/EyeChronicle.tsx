@@ -7,7 +7,7 @@ import {
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
-
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -143,13 +143,20 @@ export default function EyeChronicle() {
   return (
     <div className="p-6 space-y-8">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground">EyeChronicle</h1>
-          <p className="text-lg text-muted-foreground">Your complete eye health history</p>
-        </div>
+       <div className="text-left space-y-1">
+           <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
+             <Link to="/">Dashboard</Link>
+             <span className="text-muted-foreground">›</span>
+             <span className="text-gradient-head">EyeChronical</span>
+           </h1>
+     
+           <p className="text-lg text-muted-foreground max-w-2xl">
+          Your complete eye history
+           </p>
+         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button className="gap-2">
+            <Button className="gap-2" variant="secondary">
               <Plus className="h-5 w-5" />
               Add Record
             </Button>
@@ -259,7 +266,7 @@ export default function EyeChronicle() {
                 <p className="text-sm text-muted-foreground">Total Records</p>
                 <p className="text-3xl font-bold text-foreground">{medicalHistory.length}</p>
               </div>
-              <History className="h-6 w-6 text-primary" />
+              <History className="h-6 w-6 text-secondary" />
             </div>
           </CardContent>
         </Card>
@@ -277,7 +284,7 @@ export default function EyeChronicle() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <Eye className="h-5 w-5 text-primary" />
+                      <Eye className="h-5 w-5 text-secondary" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground">{record.condition_name}</h3>
