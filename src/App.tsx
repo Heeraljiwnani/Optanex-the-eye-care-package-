@@ -14,9 +14,10 @@ import Auth from "@/pages/Auth";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import NotFound from "@/pages/NotFound";
-
+import { ThemeProvider } from "next-themes";
 
 const App = () => (
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
   <AuthProvider>
     <TooltipProvider>
       <Toaster />
@@ -86,6 +87,7 @@ const App = () => (
       </BrowserRouter>
     </TooltipProvider>
   </AuthProvider>
+  </ThemeProvider>
 );
 
 export default App;

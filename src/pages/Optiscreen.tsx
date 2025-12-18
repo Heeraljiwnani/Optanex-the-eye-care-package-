@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import {ImageUploadDialog} from "@/components/ImageUploadDialog";
 import { SnellenTestDialog } from "@/components/SnellenTestDialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-
+import { Link } from "react-router-dom";
 import {
   Eye,
   Brain,
@@ -59,7 +59,7 @@ const screeningTests = [
     title: "Color Blindness Test",
     description: "Comprehensive color vision assessment",
     icon: Palette,
-    color: "bg-medical-teal",
+    color: "bg-[hsl(var(--colorblindness))]",
     symptoms: [
       "Difficulty distinguishing colors",
       "Problems with red and green",
@@ -75,7 +75,7 @@ const screeningTests = [
     title: "Snellen Visual Acuity",
     description: "Standard visual acuity measurement",
     icon: Target,
-    color: "bg-medical-purple",
+    color: "bg-[hsl(var(--snellentest))]",
     symptoms: [
       "Blurry vision at distance",
       "Squinting to see clearly",
@@ -121,13 +121,26 @@ export default function Optiscreen() {
   return (
     <div className="p-6 space-y-8">
       {/* Header */}
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold text-foreground">Optiscreen</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          AI-powered eye screening suite for early detection and monitoring of eye conditions.
-          Professional-grade diagnostic tools at your fingertips.
-        </p>
-      </div>
+    
+  <div className="text-left space-y-1">
+    <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
+      <Link to="/" >
+        Dashboard
+      </Link>
+
+      <span className="text-muted-foreground">›</span>
+
+      <span className="text-gradient-head">
+        Optiscreen
+      </span>
+    </h1>
+
+    <p className="text-lg text-muted-foreground max-w-2xl">
+      AI-powered eye screening tests
+    </p>
+  </div>
+
+
 
       {/* Tests Grid */}
       {!showSymptoms && (
@@ -154,9 +167,20 @@ export default function Optiscreen() {
                     </Badge>
                   </div>
                 </div>
-                <CardTitle className="text-xl group-hover:text-primary transition-colors">
-                  {test.title}
-                </CardTitle>
+                <CardTitle
+  className="
+    text-xl
+    transition-all duration-300 ease-out
+    group-hover:text-gray-400 dark:group-hover:text-gray-500
+
+    group-hover:drop-shadow-[0_1px_3px_rgba(0,0,0,0.15)]
+  "
+>
+  {test.title}
+</CardTitle>
+
+
+
               </CardHeader>
               <CardContent className="pt-0">
                 <p className="text-muted-foreground mb-4">{test.description}</p>
@@ -165,7 +189,7 @@ export default function Optiscreen() {
                     <CheckCircle className="w-4 h-4 text-success" />
                     <span>FDA Approved Algorithm</span>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-5 h-5 text-black dark:text-white group-hover:translate-x-1 transition-transform" />
                 </div>
               </CardContent>
             </Card>
