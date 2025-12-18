@@ -108,12 +108,21 @@ All colors MUST be HSL.
         /* special text-gradient*/
         --gradient-head: linear-gradient(135deg, hsl(210 100% 50%), hsl(225, 69%, 73%));
 
+        /*footer */
+        /* Footer – Light Mode */
+--footer-bg: 214 28% 80%;        /* soft steel-blue */
+--footer-border: 214 22% 70%;    /* clear separation */
+--footer-text: 215 35% 18%;      /* strong readable text */
+--footer-muted: 215 18% 42%;     /* secondary text */
+--footer-accent: 200 85% 38%;    /* medical blue accent */
+
+--icon-glow-blue: 210 100% 55%;
   }
 
   .dark {
     --background: 226, 60%, 10%;
     --foreground: 210 40% 98%;
-
+    --icon-glow-blue: 210 100% 60%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --gradient-card: 218 22% 92%;
@@ -153,6 +162,13 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Footer – Dark Mode */
+--footer-bg: 226 45% 14%;        /* calm deep navy */
+--footer-border: 226 30% 25%;    /* subtle divider */
+--footer-text: 220 20% 88%;      /* soft off-white */
+--footer-muted: 220 12% 65%;     /* readable but quiet */
+--footer-accent: 190 65% 45%;    /* teal-blue focus */
+
   }
 }
 
@@ -167,6 +183,12 @@ All colors MUST be HSL.
 }
 @layer utilities {
   .text-gradient-head {
+    background-image: var(--gradient-head);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .icon-gradient {
     background-image: var(--gradient-head);
     -webkit-background-clip: text;
     background-clip: text;

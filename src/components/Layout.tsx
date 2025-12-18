@@ -8,7 +8,7 @@ import { SplashScreen } from "@/components/SplashScreen";
 import { AuthDialog } from "@/components/AuthDialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { ThemeToggle } from "@/components/ThemeToggle";
-
+import Footer from "@/components/Footer";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -84,7 +84,14 @@ export function Layout({ children }: LayoutProps) {
               </header>
 
               {/* Main Content */}
-              <main className="flex-1 overflow-auto">{children}</main>
+         {/* Main Content */}
+<main className="flex-1 overflow-auto">
+  {children}
+</main>
+
+{/* Footer */}
+<Footer />
+
             </div>
           </SidebarProvider>
         </motion.div>
@@ -135,5 +142,6 @@ export function Layout({ children }: LayoutProps) {
         </motion.div>
       )}
     </AnimatePresence>
+    
   );
 }
