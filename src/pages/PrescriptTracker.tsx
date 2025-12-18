@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -209,17 +209,26 @@ export default function PrescriptTracker() {
   return (
     <div className="p-6 space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground">PrescriptTracker</h1>
-          <p className="text-lg text-muted-foreground">Store and organize your eye prescriptions securely</p>
-        </div>
-        <Button onClick={() => setShowUploadForm(true)} className="gap-2">
+      <div className="space-y-4">
+  <div className="flex items-start justify-between">
+    <div className="text-left space-y-1">
+      <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
+        <Link to="/">Dashboard</Link>
+        <span className="text-muted-foreground">›</span>
+        <span className="text-gradient-head">PrescriptTracker</span>
+      </h1>
+
+      <p className="text-lg text-muted-foreground max-w-2xl">
+     Store your Prescriptions
+      </p>
+    </div>
+
+    <Button onClick={() => setShowUploadForm(true)} className="gap-2" variant="secondary">
           <Upload className="h-5 w-5" />
           Upload Prescription
         </Button>
-      </div>
-
+  </div>
+</div>
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="bg-gradient-card border-0 shadow-custom-sm">
@@ -230,7 +239,7 @@ export default function PrescriptTracker() {
                 <p className="text-3xl font-bold text-foreground">{prescriptions.length}</p>
               </div>
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <FileImage className="h-6 w-6 text-primary" />
+                <FileImage className="h-6 w-6 text-secondary" />
               </div>
             </div>
           </CardContent>
@@ -433,7 +442,7 @@ export default function PrescriptTracker() {
                 {searchTerm ? "No prescriptions match your search criteria." : "Upload your first prescription to get started."}
               </p>
               {!searchTerm && (
-                <Button onClick={() => setShowUploadForm(true)}>
+                <Button onClick={() => setShowUploadForm(true)} variant="outline">
                   Upload Prescription
                 </Button>
               )}

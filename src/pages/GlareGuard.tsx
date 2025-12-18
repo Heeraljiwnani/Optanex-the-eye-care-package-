@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 import { useScreenTime } from "@/hooks/useScreenTime";
-
+import { Link } from "react-router-dom";
 export default function GlareGuard() {
   const { 
     todayTotal, 
@@ -38,7 +38,12 @@ export default function GlareGuard() {
       default: return 'text-muted-foreground';
     }
   };
-
+  const getScreenTimeColor = (minutes: number) => {
+    if (minutes >= 480) return "text-destructive"; // > 8 hrs
+    if (minutes >= 300) return "text-warning";     // > 5 hrs
+    return "text-success";
+  };
+  
   const getProtectionColor = (score: number) => {
     if (score >= 80) return 'text-success';
     if (score >= 60) return 'text-warning';
@@ -71,8 +76,12 @@ export default function GlareGuard() {
   return (
     <div className="p-6 space-y-8">
       <div>
-        <h1 className="text-4xl font-bold text-foreground">GlareGuard</h1>
-        <p className="text-lg text-muted-foreground">Monitor and protect against blue light exposure</p>
+        <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
+               <Link to="/">Dashboard</Link>
+               <span className="text-muted-foreground">›</span>
+               <span className="text-gradient-head">GlareGuard</span>
+             </h1>
+             <p className="text-lg text-muted-foreground max-w-2xl" >Monitors and Protects your eye</p>
         {isActive && (
           <div className="flex items-center gap-2 mt-2">
             <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
@@ -95,7 +104,10 @@ export default function GlareGuard() {
                   </p>
                 </div>
               </div>
-              <Monitor className="h-6 w-6 text-primary" />
+              <Monitor
+  className={`h-6 w-6 ${getScreenTimeColor(todayTotal)}`}
+/>
+
             </div>
           </CardContent>
         </Card>

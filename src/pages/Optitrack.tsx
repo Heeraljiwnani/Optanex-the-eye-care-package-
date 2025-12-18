@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { Link } from "react-router-dom";
 
 export default function Optitrack() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
@@ -156,23 +157,34 @@ export default function Optitrack() {
   return (
     <div className="p-6 space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground">Optitrack</h1>
-          <p className="text-lg text-muted-foreground">Track your eye power progression over time</p>
-        </div>
-        <Button onClick={() => setShowAddForm(true)} className="gap-2">
-          <Plus className="h-5 w-5" />
-          Add Reading
-        </Button>
-      </div>
+      <div className="space-y-4">
+  <div className="flex items-start justify-between">
+    <div className="text-left space-y-1">
+      <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
+        <Link to="/">Dashboard</Link>
+        <span className="text-muted-foreground">›</span>
+        <span className="text-gradient-head">OptiTrack</span>
+      </h1>
+
+      <p className="text-lg text-muted-foreground max-w-2xl">
+        Track progression of your eye-power
+      </p>
+    </div>
+
+    <Button onClick={() => setShowAddForm(true)} className="gap-2" variant="secondary">
+      <Plus className="h-5 w-5" />
+      Add Reading
+    </Button>
+  </div>
+</div>
+
 
       {/* Current Status Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card className="bg-gradient-card border-0 shadow-custom-sm">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg flex items-center gap-2">
-              <Eye className="h-5 w-5 text-primary" />
+              <Eye className="h-5 w-5 text-secondary" />
               Left Eye
             </CardTitle>
           </CardHeader>
@@ -369,7 +381,7 @@ export default function Optitrack() {
       <Card className="bg-gradient-card border-0 shadow-custom-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5" />
+            <BarChart3 className="h-5 w-5 text-secondary" />
             Power History
           </CardTitle>
         </CardHeader>
@@ -383,7 +395,7 @@ export default function Optitrack() {
               powerHistory.map((entry, index) => (
                 <div key={entry.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg group">
                   <div className="flex items-center gap-4">
-                    <div className="text-center">
+                    <div className="text-left">
                       <p className="text-sm text-muted-foreground">Date</p>
                       <p className="font-semibold">{format(new Date(entry.checkup_date), "MMM dd, yyyy")}</p>
                     </div>
