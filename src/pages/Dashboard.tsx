@@ -178,12 +178,12 @@ export default function Dashboard() {
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {quickStats.map((stat) => (
-          <Card key={stat.label} className="bg-gradient-card border-0 shadow-custom-sm">
+          <Card key={stat.label} className=" border-0  bg-[hsl(var(--gradient-card))] shadow-custom-sm">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-sm text-black">{stat.label}</p>
+                  <p className="text-2xl font-bold text-black">{stat.value}</p>
                 </div>
                 <div className="w-12 h-12 bg-primary/15 rounded-lg flex items-center justify-center">
                 <stat.icon
@@ -213,7 +213,8 @@ export default function Dashboard() {
         <h2 className="text-2xl font-bold text-foreground mb-6">Eye Care Features</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature) => (
-            <Card key={feature.title} className="group hover:shadow-custom-lg transition-all duration-300 border-0 bg-gradient-card">
+            <Card key={feature.title} className="group hover:shadow-custom-lg transition-all duration-300 border-0 bg-[hsl(var(--gradient-card))] text-black
+">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <div className={`w-12 h-12 ${feature.color} rounded-lg flex items-center justify-center`}>
@@ -227,9 +228,9 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent className="pt-0">
                 <p className="text-muted-foreground mb-4">{feature.description}</p>
-                <Button  variant="outline" className="w-full " asChild>
+                <Button  variant="outline" className="w-full text-white " asChild>
                   <Link to={feature.href}>
-                    Open {feature.title} <ArrowRight className="ml-2 h-4 w-4" />
+                    Open {feature.title} <ArrowRight className="ml-2 h-4 w-4 text-white" />
                   </Link>
                 </Button>
               </CardContent>

@@ -148,7 +148,7 @@ export default function Optiscreen() {
           {screeningTests.map((test) => (
             <Card 
               key={test.id} 
-              className="group hover:shadow-custom-lg transition-all duration-300 cursor-pointer border-0 bg-gradient-card"
+              className="group hover:shadow-custom-lg transition-all duration-300 cursor-pointer border-0  bg-[hsl(var(--gradient-card))] "
               onClick={() => handleTestClick(test.id)}
             >
               <CardHeader className="pb-4">
@@ -161,7 +161,7 @@ export default function Optiscreen() {
                       <Clock className="w-3 h-3 mr-1" />
                       {test.duration}
                     </Badge>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="secondary" className="text-xs">
                       <Zap className="w-3 h-3 mr-1" />
                       {test.accuracy}
                     </Badge>
@@ -170,6 +170,7 @@ export default function Optiscreen() {
                 <CardTitle
   className="
     text-xl
+    text-black
     transition-all duration-300 ease-out
     group-hover:text-gray-400 dark:group-hover:text-gray-500
 
@@ -189,7 +190,7 @@ export default function Optiscreen() {
                     <CheckCircle className="w-4 h-4 text-success" />
                     <span>FDA Approved Algorithm</span>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-black dark:text-white group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-5 h-5 text-black  group-hover:translate-x-1 transition-transform" />
                 </div>
               </CardContent>
             </Card>
