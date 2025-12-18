@@ -181,17 +181,17 @@ export default function Optitrack() {
 
       {/* Current Status Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg flex items-center gap-2">
+            <CardTitle className="text-lg flex items-center gap-2 text-black">
               <Eye className="h-5 w-5 text-secondary" />
               Left Eye
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between text-black">
               <div>
-                <p className="text-3xl font-bold text-foreground">
+                <p className="text-3xl font-bold text-black">
                   {latestEntry?.left_eye_power || '--'}
                 </p>
                 <p className="text-sm text-muted-foreground">Diopters</p>
@@ -215,9 +215,9 @@ export default function Optitrack() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg flex items-center gap-2">
+            <CardTitle className="text-lg flex items-center gap-2 text-black">
               <Eye className="h-5 w-5 text-secondary" />
               Right Eye
             </CardTitle>
@@ -225,7 +225,7 @@ export default function Optitrack() {
           <CardContent>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-3xl font-bold text-foreground">
+                <p className="text-3xl font-bold text-black">
                   {latestEntry?.right_eye_power || '--'}
                 </p>
                 <p className="text-sm text-muted-foreground">Diopters</p>
@@ -249,15 +249,15 @@ export default function Optitrack() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg flex items-center gap-2">
+            <CardTitle className="text-lg flex items-center gap-2 text-black">
               <Activity className="h-5 w-5 text-accent" />
               Last Checkup
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-foreground">
+            <p className="text-3xl font-bold text-black">
               {latestEntry ? format(new Date(latestEntry.checkup_date), "MMM dd") : '--'}
             </p>
             <p className="text-sm text-muted-foreground">
@@ -378,9 +378,9 @@ export default function Optitrack() {
       )}
 
       {/* Power History */}
-      <Card className="bg-gradient-card border-0 shadow-custom-sm">
+      <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-black">
             <BarChart3 className="h-5 w-5 text-secondary" />
             Power History
           </CardTitle>
@@ -390,28 +390,28 @@ export default function Optitrack() {
             {loading ? (
               <p className="text-center text-muted-foreground">Loading...</p>
             ) : powerHistory.length === 0 ? (
-              <p className="text-center text-muted-foreground">No records found. Add your first reading!</p>
+              <p className="text-center text-black">No records found. Add your first reading!</p>
             ) : (
               powerHistory.map((entry, index) => (
                 <div key={entry.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg group">
                   <div className="flex items-center gap-4">
                     <div className="text-left">
                       <p className="text-sm text-muted-foreground">Date</p>
-                      <p className="font-semibold">{format(new Date(entry.checkup_date), "MMM dd, yyyy")}</p>
+                      <p className="font-semibold text-black">{format(new Date(entry.checkup_date), "MMM dd, yyyy")}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-8">
                     <div className="grid grid-cols-2 gap-8 text-center">
                       <div>
-                        <p className="text-sm text-muted-foreground">Left Eye</p>
-                        <p className="text-lg font-bold">{entry.left_eye_power || '--'}D</p>
+                        <p className="text-sm text-black">Left Eye</p>
+                        <p className="text-lg font-bold text-black">{entry.left_eye_power || '--'}D</p>
                         {entry.left_eye_cylinder && (
-                          <p className="text-xs text-muted-foreground">Astig: {entry.left_eye_cylinder}D</p>
+                          <p className="text-xs text-muted-foreground text-black">Astig: {entry.left_eye_cylinder}D</p>
                         )}
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">Right Eye</p>
-                        <p className="text-lg font-bold">{entry.right_eye_power || '--'}D</p>
+                        <p className="text-sm text-black">Right Eye</p>
+                        <p className="text-lg font-bold text-black">{entry.right_eye_power || '--'}D</p>
                         {entry.right_eye_cylinder && (
                           <p className="text-xs text-muted-foreground">Astig: {entry.right_eye_cylinder}D</p>
                         )}

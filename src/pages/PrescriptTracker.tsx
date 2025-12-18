@@ -231,12 +231,12 @@ export default function PrescriptTracker() {
 </div>
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Total Prescriptions</p>
-                <p className="text-3xl font-bold text-foreground">{prescriptions.length}</p>
+                <p className="text-sm text-black">Total Prescriptions</p>
+                <p className="text-3xl font-bold text-black">{prescriptions.length}</p>
               </div>
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                 <FileImage className="h-6 w-6 text-secondary" />
@@ -245,12 +245,12 @@ export default function PrescriptTracker() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Latest Upload</p>
-                <p className="text-lg font-bold text-foreground">
+                <p className="text-sm text-black">Latest Upload</p>
+                <p className="text-lg font-bold text-black">
                   {prescriptions.length > 0 ? format(new Date(prescriptions[0].prescription_date), "MMM dd") : "No data"}
                 </p>
               </div>
@@ -261,13 +261,13 @@ export default function PrescriptTracker() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Storage Used</p>
-                <p className="text-lg font-bold text-foreground">12.5 MB</p>
-                <p className="text-xs text-muted-foreground">of 1 GB</p>
+                <p className="text-sm text-black">Storage Used</p>
+                <p className="text-lg font-bold text-black">12.5 MB</p>
+                <p className="text-xs text-black">of 1 GB</p>
               </div>
               <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
                 <Upload className="h-6 w-6 text-accent" />
@@ -279,7 +279,7 @@ export default function PrescriptTracker() {
 
       {/* Upload Form */}
       {showUploadForm && (
-        <Card className="bg-gradient-card border-0 shadow-custom-lg">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Upload className="h-5 w-5" />
@@ -434,15 +434,15 @@ export default function PrescriptTracker() {
         <h2 className="text-2xl font-bold text-foreground">Your Prescriptions</h2>
         
         {filteredPrescriptions.length === 0 ? (
-          <Card className="bg-gradient-card border-0">
+          <Card className="bg-[hsl(var(--gradient-card))] border-0">
             <CardContent className="p-12 text-center">
               <FileImage className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">No Prescriptions Found</h3>
+              <h3 className="text-lg font-semibold text-black mb-2">No Prescriptions Found</h3>
               <p className="text-muted-foreground mb-4">
                 {searchTerm ? "No prescriptions match your search criteria." : "Upload your first prescription to get started."}
               </p>
               {!searchTerm && (
-                <Button onClick={() => setShowUploadForm(true)} variant="outline">
+                <Button onClick={() => setShowUploadForm(true)} variant="outline" className="text-white">
                   Upload Prescription
                 </Button>
               )}

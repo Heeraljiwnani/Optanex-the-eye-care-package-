@@ -91,15 +91,15 @@ export default function GlareGuard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Today's Screen Time</p>
-                <p className="text-3xl font-bold text-foreground">{formattedTime}</p>
-                <div className="mt-2">
+                <p className="text-sm text-black">Today's Screen Time</p>
+                <p className="text-3xl font-bold text-black">{formattedTime}</p>
+                <div className="mt-2 text-black">
                   <Progress value={Math.min((todayTotal / 480) * 100, 100)} className="h-2" />
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-black mt-1">
                     {todayTotal > 480 ? 'Exceeded recommended' : `${Math.round(480 - todayTotal)}min remaining`}
                   </p>
                 </div>
@@ -112,13 +112,13 @@ export default function GlareGuard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Blue Light Level</p>
+                <p className="text-sm text-black">Blue Light Level</p>
                 <p className={`text-3xl font-bold ${getBlueLightColor(blueLightLevel)}`}>{blueLightLevel}</p>
-                <Badge variant={blueLightLevel === 'High' ? 'destructive' : blueLightLevel === 'Medium' ? 'secondary' : 'outline'} className="mt-2">
+                <Badge variant={blueLightLevel === 'High' ? 'destructive' : blueLightLevel === 'Medium' ? 'secondary' : 'outline'} className="mt-2 text-black">
                   {blueLightLevel === 'High' ? 'Take action' : blueLightLevel === 'Medium' ? 'Monitor' : 'Good'}
                 </Badge>
               </div>
@@ -127,11 +127,11 @@ export default function GlareGuard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Protection Score</p>
+                <p className="text-sm text-black">Protection Score</p>
                 <p className={`text-3xl font-bold ${getProtectionColor(protectionScore)}`}>{protectionScore}%</p>
                 <div className="mt-2">
                   <Progress 
@@ -147,9 +147,9 @@ export default function GlareGuard() {
       </div>
 
       {/* Protection Settings */}
-      <Card className="bg-gradient-card border-0 shadow-custom-sm">
+      <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-black">
             <Settings className="h-5 w-5" />
             Protection Settings
           </CardTitle>
@@ -157,7 +157,7 @@ export default function GlareGuard() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">Blue Light Filter</p>
+              <p className="font-medium text-black">Blue Light Filter</p>
               <p className="text-sm text-muted-foreground">Apply software blue light reduction</p>
             </div>
             <Switch 
@@ -167,7 +167,7 @@ export default function GlareGuard() {
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">Break Reminders</p>
+              <p className="font-medium text-black">Break Reminders</p>
               <p className="text-sm text-muted-foreground">Get notified every 20 minutes</p>
             </div>
             <Switch 

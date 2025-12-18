@@ -259,12 +259,12 @@ export default function EyeChronicle() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-gradient-card border-0 shadow-custom-sm">
+        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Total Records</p>
-                <p className="text-3xl font-bold text-foreground">{medicalHistory.length}</p>
+                <p className="text-sm text-black">Total Records</p>
+                <p className="text-3xl font-bold text-black">{medicalHistory.length}</p>
               </div>
               <History className="h-6 w-6 text-secondary" />
             </div>
@@ -274,12 +274,12 @@ export default function EyeChronicle() {
 
       <div className="space-y-4">
         {loading ? (
-          <p className="text-center text-muted-foreground">Loading...</p>
+          <p className="text-center text-black">Loading...</p>
         ) : medicalHistory.length === 0 ? (
-          <p className="text-center text-muted-foreground">No medical records found. Add your first record!</p>
+          <p className="text-center text-black">No medical records found. Add your first record!</p>
         ) : (
           medicalHistory.map((record) => (
-            <Card key={record.id} className="bg-gradient-card border-0 shadow-custom-sm group">
+            <Card key={record.id} className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm group">
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -287,13 +287,13 @@ export default function EyeChronicle() {
                       <Eye className="h-5 w-5 text-secondary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground">{record.condition_name}</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <h3 className="font-semibold text-black">{record.condition_name}</h3>
+                      <p className="text-sm text-black">
                         {record.diagnosis_date ? format(new Date(record.diagnosis_date), "MMM dd, yyyy") : 'No date'}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 ">
                     {record.status && <Badge variant="secondary">{record.status}</Badge>}
                     <Button
                       variant="ghost"
@@ -309,12 +309,12 @@ export default function EyeChronicle() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
                     {record.doctor_name && (
-                      <p className="text-muted-foreground">Doctor: <span className="font-medium text-foreground">{record.doctor_name}</span></p>
+                      <p className="text-muted-foreground">Doctor: <span className="font-medium text-black">{record.doctor_name}</span></p>
                     )}
                   </div>
                   <div>
                     {record.treatment && (
-                      <p className="text-muted-foreground">Treatment: <span className="font-medium text-foreground">{record.treatment}</span></p>
+                      <p className="text-muted-foreground">Treatment: <span className="font-medium text-black">{record.treatment}</span></p>
                     )}
                   </div>
                 </div>
