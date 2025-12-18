@@ -27,7 +27,7 @@ const screeningTests = [
     title: "Diabetic Retinopathy",
     description: "AI-powered screening for diabetic eye complications",
     icon: Eye,
-    color: "bg-gradient-primary",
+    color: "bg-[hsl(var(--optitrack))]",
     symptoms: [
       "Blurred or fluctuating vision",
       "Dark spots or floaters",
@@ -42,8 +42,8 @@ const screeningTests = [
     id: "macular-degeneration",
     title: "Age-Related Macular Degeneration",
     description: "Early detection of macular degeneration",
-    icon: Brain,
-    color: "bg-gradient-secondary",
+    icon: Eye,
+    color: "bg-[hsl(var(--prescripttracker))]",
     symptoms: [
       "Central vision becomes blurry",
       "Straight lines appear wavy",

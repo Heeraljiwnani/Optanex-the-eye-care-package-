@@ -9,21 +9,22 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* OptaNex Healthcare Theme */
-    --background: 220 20% 98%;
+    --background: 215, 39%, 87%;
     --foreground: 215 25% 15%;
 
-    --card: 0 0% 100%;
+    --card:214, 19%, 78%;
     --card-foreground: 215 25% 15%;
-
+    --contrast: 179, 44%, 55%;
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 15%;
 
-    --primary: 200 100% 45%;
+    --primary: 150, 14%, 84%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 200 100% 55%;
     --primary-muted: 200 50% 90%;
 
-    --secondary: 160 85% 35%;
+    --secondary: 202, 46%, 72%;
+    --secondary-dark:202, 46%, 58%;
     --secondary-foreground: 0 0% 100%;
     --secondary-glow: 160 85% 45%;
     --secondary-muted: 160 40% 90%;
@@ -59,7 +60,7 @@ All colors MUST be HSL.
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-glow)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(214, 52, 50) 0%, hsl(202, 30, 85) 100%);
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.8), hsl(0 0% 100% / 0.4));
 
     /* Shadows */
@@ -72,21 +73,33 @@ All colors MUST be HSL.
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 202 30% 85%;
 
     --sidebar-foreground: 240 5.3% 26.1%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary: 202 46% 58%;
 
     --sidebar-primary-foreground: 0 0% 98%;
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent: 202 46% 72%;
 
     --sidebar-accent-foreground: 240 5.9% 10%;
 
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 202 30% 78%;
+    --navy-accessible: 215 40% 30%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(214 52% 50%) 0%,
+      hsl(202 30% 85%) 100%
+    );
+    /* features bg*/
+    --optiscreen:207, 27%, 21%;
+    --optitrack:187, 51%, 24%;
+    --prescripttracker:264, 27%, 11%;
+    --eyechronical:120, 2%, 20%;
+    --glareguard:225, 40%, 18%;
   }
 
   .dark {

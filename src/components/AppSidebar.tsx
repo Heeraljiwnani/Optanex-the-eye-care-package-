@@ -49,7 +49,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar className={`${collapsed ? "w-16" : "w-64"} border-r border-border`}>
-      <SidebarContent className="bg-card/30">
+      <SidebarContent className="bg-card">
         <SidebarGroup>
           <SidebarGroupLabel className={`${collapsed ? "sr-only" : ""} text-muted-foreground font-medium`}>
             Eye Care Suite
