@@ -24,7 +24,7 @@ const features = [
     description: "AI-powered eye screening tests",
     icon: Scan,
     href: "/optiscreen",
-    color: "bg-gradient-primary",
+    color: "bg-[hsl(var(--optiscreen))]",
     stats: "4 Tests Available"
   },
   {
@@ -32,7 +32,7 @@ const features = [
     description: "Track your eye power trends",
     icon: BarChart3,
     href: "/optitrack",
-    color: "bg-gradient-secondary",
+    color: "bg-[hsl(var(--optitrack))]",
     stats: "Visual Analytics"
   },
   {
@@ -40,7 +40,7 @@ const features = [
     description: "Store prescription images",
     icon: FileImage,
     href: "/prescripttracker",
-    color: "bg-medical-teal",
+    color: "bg-[hsl(var(--prescripttracker))]",
     stats: "Secure Storage"
   },
   {
@@ -48,7 +48,7 @@ const features = [
     description: "Medical history records",
     icon: History,
     href: "/eyechronicle",
-    color: "bg-medical-purple",
+    color: "bg-[hsl(var(--eyechronical))]",
     stats: "Complete Records"
   },
   {
@@ -56,7 +56,7 @@ const features = [
     description: "Blue light exposure tracking",
     icon: Shield,
     href: "/glareguard",
-    color: "bg-accent",
+    color: "bg-[hsl(var(--glareguard))]",
     stats: "Real-time Monitor"
   }
 ];
@@ -145,23 +145,28 @@ export default function Dashboard() {
   return (
     <div className="p-6 space-y-8">
       {/* Hero Section */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-hero p-8 text-white">
-        <div className="relative z-10">
-          <h1 className="text-4xl font-bold mb-4">Welcome to OptaNex</h1>
-          <p className="text-lg mb-6 opacity-90 max-w-2xl">
-            Your complete eye care companion. Monitor, track, and maintain your vision health with AI-powered tools and comprehensive analytics.
-          </p>
-          <div className="flex gap-4">
-            <Button size="lg" variant="secondary" asChild>
-              <Link to="/optiscreen">
-                Start Eye Screening <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
-      </div>
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-hero p-2 text-white">
+  <div
+    className="relative z-10 max-w-6xl rounded-2xl p-8 shadow-lg"
+    style={{ background: "var(--gradient-hero-box)" }}
+  >
+    <h1 className="text-4xl font-bold mb-4">Welcome to OptaNex</h1>
+    <p className="text-lg mb-6 opacity-90">
+      Your complete eye care companion. Monitor, track, and maintain your vision
+      health with AI-powered tools and comprehensive analytics.
+    </p>
+    <Button size="lg" variant="secondary" asChild>
+      <Link to="/optiscreen">
+        Start Eye Screening <ArrowRight className="ml-2 h-5 w-5" />
+      </Link>
+    </Button>
+  </div>
+
+  {/* Decorative blobs remain outside the box */}
+  <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+  <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+</div>
+
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -201,7 +206,7 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent className="pt-0">
                 <p className="text-muted-foreground mb-4">{feature.description}</p>
-                <Button asChild variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <Button  variant="outline" className="w-full " asChild>
                   <Link to={feature.href}>
                     Open {feature.title} <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
