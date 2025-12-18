@@ -258,7 +258,7 @@ export default function Optiscreen() {
                   
                   <Card className="bg-primary/5 border-primary/20">
                     <CardContent className="p-4">
-                      <h4 className="font-semibold text-primary mb-2">Before Starting</h4>
+                      <h4 className="font-semibold text-black dark:text-white mb-2">Before Starting</h4>
                       <ul className="text-sm space-y-1 text-muted-foreground">
                         <li>• Ensure good lighting conditions</li>
                         <li>• Clean your camera lens</li>
