@@ -12,15 +12,20 @@ import Footer from "@/components/Footer";
 interface LayoutProps {
   children: React.ReactNode;
 }
-
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { Languages } from "lucide-react";
 export function Layout({ children }: LayoutProps) {
+  const { i18n } = useTranslation();
   const { user, loading, signOut } = useAuth();
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  
 
   // While loading, show splash screen
   if (loading) {
     return <SplashScreen />;
   }
+
 
   return (
     <AnimatePresence mode="wait">
@@ -64,6 +69,18 @@ export function Layout({ children }: LayoutProps) {
 
                   <div className="flex items-center gap-2">
                   <ThemeToggle />
+                  <Button
+  variant="outline"
+  size="sm"
+  onClick={() =>
+    i18n.changeLanguage(i18n.language === "en" ? "hi" : "en")
+  }
+  className="flex items-center gap-2"
+>
+  <Languages className="h-4 w-4" />
+  {i18n.language === "en" ? "हिंदी" : "EN"}
+</Button>
+
                     <div className="text-right hidden sm:block">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <User className="h-4 w-4" />

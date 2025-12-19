@@ -16,6 +16,7 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import NotFound from "@/pages/NotFound";
 import { ThemeProvider } from "next-themes";
 
+
 const App = () => (
   <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
   <AuthProvider>

@@ -17,6 +17,8 @@ import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "react-i18next";
+
 
 const features = [
   {
@@ -62,6 +64,7 @@ const features = [
 ];
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [stats, setStats] = useState({
     lastCheckup: "No data",
@@ -150,20 +153,20 @@ export default function Dashboard() {
     className="relative z-10 max-w-6xl rounded-2xl p-8 shadow-lg"
     style={{ background: "var(--gradient-hero-box)" }}
   >
-    <h1 className="text-4xl font-bold mb-4">Welcome to OptaNex</h1>
+    <h1 className="text-4xl font-bold mb-4">{t("Welcome")} to OptaNex</h1>
     <p className="text-lg mb-6 opacity-90">
-      Your complete eye care companion. Monitor, track, and maintain your vision
-      health with AI-powered tools and comprehensive analytics.
-    </p>
+  {t("heroDescription")}
+</p>
+
     <div className="flex gap-4">
     <Button size="lg" variant="secondary" asChild>
       <Link to="/optiscreen">
-        Start Eye Screening <ArrowRight className="ml-2 h-5 w-5" />
+        {t("Start Eye Screening")} <ArrowRight className="ml-2 h-5 w-5" />
       </Link>
     </Button>
     <Button size ="lg" variant="glass" asChild>
     <Link to="/optitrack">
-      Manage your Eye-care <ArrowRight className="ml-2 h-5 w-5" />
+   {  t( "Manage your Eye-care")} <ArrowRight className="ml-2 h-5 w-5" />
       </Link>
     </Button>
     </div>
@@ -210,7 +213,7 @@ export default function Dashboard() {
 
       {/* Features Grid */}
       <div>
-        <h2 className="text-2xl font-bold text-foreground mb-6">Eye Care Features</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-6">Eye Care {t("Features")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature) => (
             <Card key={feature.title} className="group hover:shadow-custom-lg transition-all duration-300 border-0 bg-[hsl(var(--gradient-card))] text-black
@@ -247,7 +250,7 @@ export default function Dashboard() {
               <Shield className="h-5 w-5 text-success" />
             </div>
             <div>
-              <h3 className="font-semibold text-foreground mb-2">Privacy & Data Protection</h3>
+              <h3 className="font-semibold text-foreground mb-2">{t("Privacy & Data Protection")}</h3>
               <p className="text-sm text-muted-foreground">
                 OptaNex is fully compliant with DPDP Act 2023. Your medical data is encrypted, stored securely, 
                 and never shared without your explicit consent. You have full control over your health information.
