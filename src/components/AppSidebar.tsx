@@ -19,7 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
+import { t } from "i18next";
 import {
   Sidebar,
   SidebarContent,
@@ -33,12 +33,12 @@ import {
 } from "./ui/sidebar";
 
 const menuItems = [
-  { title: "Dashboard", url: "/", icon: Home },
-  { title: "Optiscreen", url: "/optiscreen", icon: Scan },
-  { title: "Optitrack", url: "/optitrack", icon: BarChart3 },
-  { title: "PrescriptTracker", url: "/prescripttracker", icon: FileImage },
-  { title: "EyeChronicle", url: "/eyechronicle", icon: History },
-  { title: "GlareGuard", url: "/glareguard", icon: Shield },
+  { title: t("dashboard"), url: "/", icon: Home },
+  { title: t("optiscreen"), url: "/optiscreen", icon: Scan },
+  { title:t("optitrack"), url: "/optitrack", icon: BarChart3 },
+  { title: t("prescripttracker"), url: "/prescripttracker", icon: FileImage },
+  { title: t("eyechronical"), url: "/eyechronicle", icon: History },
+  { title: t("glareguard"), url: "/glareguard", icon: Shield },
 ];
 
 export function AppSidebar() {
