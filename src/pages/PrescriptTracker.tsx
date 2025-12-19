@@ -26,9 +26,12 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 
 
 export default function PrescriptTracker() {
+  const { t } = useTranslation();
+
   const { user } = useAuth();
   const { toast } = useToast();
   const [showUploadForm, setShowUploadForm] = useState(false);
@@ -215,17 +218,20 @@ export default function PrescriptTracker() {
       <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
         <Link to="/">Dashboard</Link>
         <span className="text-muted-foreground">›</span>
-        <span className="text-gradient-head">PrescriptTracker</span>
+        <span className="text-gradient-head">{t("prescripttracker_title")}</span>
+
       </h1>
 
       <p className="text-lg text-muted-foreground max-w-2xl">
-     Store your Prescriptions
-      </p>
+  {t("prescripttracker_subtitle")}
+</p>
+
     </div>
 
     <Button onClick={() => setShowUploadForm(true)} className="gap-2" variant="secondary">
           <Upload className="h-5 w-5" />
-          Upload Prescription
+          {t("upload_prescription")}
+
         </Button>
   </div>
 </div>
@@ -235,7 +241,8 @@ export default function PrescriptTracker() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-black">Total Prescriptions</p>
+              <p className="text-sm text-black">{t("total_prescriptions")}</p>
+
                 <p className="text-3xl font-bold text-black">{prescriptions.length}</p>
               </div>
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -249,7 +256,8 @@ export default function PrescriptTracker() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-black">Latest Upload</p>
+              <p className="text-sm text-black">{t("latest_upload")}</p>
+
                 <p className="text-lg font-bold text-black">
                   {prescriptions.length > 0 ? format(new Date(prescriptions[0].prescription_date), "MMM dd") : "No data"}
                 </p>
@@ -265,7 +273,8 @@ export default function PrescriptTracker() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-black">Storage Used</p>
+              <p className="text-sm text-black">{t("storage_used")}</p>
+
                 <p className="text-lg font-bold text-black">12.5 MB</p>
                 <p className="text-xs text-black">of 1 GB</p>
               </div>
@@ -290,7 +299,10 @@ export default function PrescriptTracker() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="doctorName">Doctor Name *</Label>
+                <Label htmlFor="doctorName">
+  {t("doctor_name")} *
+</Label>
+
                   <Input
                     id="doctorName"
                     placeholder="Dr. John Smith"
@@ -300,7 +312,8 @@ export default function PrescriptTracker() {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="clinic">Clinic/Hospital</Label>
+                <Label htmlFor="clinic">{t("clinic_name")}</Label>
+
                   <Input
                     id="clinic"
                     placeholder="Eye Care Center"
@@ -310,7 +323,8 @@ export default function PrescriptTracker() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Date of Prescription *</Label>
+                <Label>{t("date_of_prescription")} *</Label>
+
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -321,7 +335,8 @@ export default function PrescriptTracker() {
                         )}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+                        {selectedDate ? format(selectedDate, "PPP") : <span>{t("pick_date")}</span>
+                      }
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0 bg-background border border-border rounded-md shadow-lg" align="start">
@@ -344,18 +359,21 @@ export default function PrescriptTracker() {
                     value={formData.type}
                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   >
-                    <option value="Glasses Prescription">Glasses Prescription</option>
-                    <option value="Contact Lens Prescription">Contact Lens Prescription</option>
-                    <option value="Specialist Report">Specialist Report</option>
-                    <option value="Eye Test Results">Eye Test Results</option>
-                    <option value="Other">Other</option>
+                    <option value="Glasses Prescription">{t("glasses_prescription")}</option>
+                    <option value="Contact Lens Prescription">{t("contact_lens_prescription")}</option>
+                    <option value="Specialist Report">{t("specialist_report")}</option>
+                    <option value="Eye Test Results">{t("eye_test_results")}</option>
+                    <option value="Other">{t("other")}</option>
                   </select>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="file">Upload Prescription Image/PDF *</Label>
+                <Label htmlFor="file">
+  {t("upload_image_pdf")} *
+</Label>
+
                   <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
                     <input
                       id="file"
@@ -376,10 +394,12 @@ export default function PrescriptTracker() {
                       ) : (
                         <div>
                           <p className="text-sm text-muted-foreground">
-                            Click to upload or drag and drop
+                          {t("click_to_upload")}
+
                           </p>
                           <p className="text-xs text-muted-foreground">
-                            PNG, JPG, PDF up to 10MB
+                          {t("file_types")}
+
                           </p>
                         </div>
                       )}
@@ -388,7 +408,7 @@ export default function PrescriptTracker() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="notes">Notes (Optional)</Label>
+                  <Label htmlFor="notes">{t("notes_optional")}</Label>
                   <Textarea
                     id="notes"
                     placeholder="Any additional notes about this prescription..."
@@ -406,10 +426,12 @@ export default function PrescriptTracker() {
                 className="flex-1"
                 disabled={!selectedFile || !formData.doctorName || !selectedDate}
               >
-                Upload Prescription
+              {t("upload_prescription")}
+
               </Button>
               <Button variant="outline" onClick={() => setShowUploadForm(false)}>
-                Cancel
+              {t("cancel")}
+
               </Button>
             </div>
           </CardContent>
@@ -421,7 +443,8 @@ export default function PrescriptTracker() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search prescriptions by doctor, clinic, or type..."
+            placeholder={t("search_prescriptions")}
+
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -437,7 +460,8 @@ export default function PrescriptTracker() {
           <Card className="bg-[hsl(var(--gradient-card))] border-0">
             <CardContent className="p-12 text-center">
               <FileImage className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-black mb-2">No Prescriptions Found</h3>
+              <h3 className="text-lg font-semibold text-black mb-2"><h3>{t("no_prescriptions_found")}</h3>
+              </h3>
               <p className="text-muted-foreground mb-4">
                 {searchTerm ? "No prescriptions match your search criteria." : "Upload your first prescription to get started."}
               </p>

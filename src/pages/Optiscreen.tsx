@@ -18,77 +18,79 @@ import {
   Clock,
   Zap,
 } from "lucide-react";
-
+import { useTranslation } from "react-i18next";
 import IshiharaPlate from "@/components/IshiharaPlate";
+
+
+export default function Optiscreen() {
+  const { t } = useTranslation();
 
 const screeningTests = [
   {
     id: "diabetic-retinopathy",
-    title: "Diabetic Retinopathy",
-    description: "AI-powered screening for diabetic eye complications",
+    title:  t("optiscreen1"),
+    description:t("optiscreen1des"),
     icon: Eye,
     color: "bg-[hsl(var(--optitrack))]",
     symptoms: [
-      "Blurred or fluctuating vision",
-      "Dark spots or floaters",
-      "Difficulty seeing at night",
-      "Vision loss",
-      "Colors appearing faded"
+      t("dr_symptom_1"),
+      t("dr_symptom_2"),
+      t("dr_symptom_3"),
+      t("dr_symptom_4"),
+      t("dr_symptom_5")
     ],
     duration: "3-5 minutes",
     accuracy: "95%"
   },
   {
     id: "macular-degeneration",
-    title: "Age-Related Macular Degeneration",
-    description: "Early detection of macular degeneration",
+    title: t("optiscreen2"),
+    description:t("optiscreen2des"),
     icon: Eye,
     color: "bg-[hsl(var(--prescripttracker))]",
     symptoms: [
-      "Central vision becomes blurry",
-      "Straight lines appear wavy",
-      "Difficulty recognizing faces",
-      "Need for brighter light when reading",
-      "Decreased color intensity"
+      t("md_symptom_1"),
+      t("md_symptom_2"),
+      t("md_symptom_3"),
+      t("md_symptom_4"),
+      t("md_symptom_5")
     ],
     duration: "4-6 minutes",
     accuracy: "92%"
   },
   {
     id: "color-blindness",
-    title: "Color Blindness Test",
-    description: "Comprehensive color vision assessment",
+    title: t("optiscreen3"),
+    description: t("optiscreen3des"),
     icon: Palette,
     color: "bg-[hsl(var(--colorblindness))]",
     symptoms: [
-      "Difficulty distinguishing colors",
-      "Problems with red and green",
-      "Trouble seeing in dim light",
-      "Colors appear less vibrant",
-      "Confusion with traffic lights"
+      t("cb_symptom_1"),
+      t("cb_symptom_2"),
+      t("cb_symptom_3"),
+      t("cb_symptom_4"),
+      t("cb_symptom_5")
     ],
     duration: "2-3 minutes",
     accuracy: "98%"
   },
   {
     id: "snellen-test",
-    title: "Snellen Visual Acuity",
-    description: "Standard visual acuity measurement",
+    title:  t("optiscreen4"),
+    description: t("optiscreen4des"),
     icon: Target,
     color: "bg-[hsl(var(--snellentest))]",
     symptoms: [
-      "Blurry vision at distance",
-      "Squinting to see clearly",
-      "Eye strain and headaches",
-      "Difficulty reading signs",
-      "Need to sit closer to TV"
+      t("sn_symptom_1"),
+      t("sn_symptom_2"),
+      t("sn_symptom_3"),
+      t("sn_symptom_4"),
+      t("sn_symptom_5")
     ],
     duration: "1-2 minutes",
     accuracy: "99%"
   }
 ];
-
-export default function Optiscreen() {
   const [selectedTest, setSelectedTest] = useState<string | null>(null);
   const [showSymptoms, setShowSymptoms] = useState<string | null>(null);
   const [activeTest, setActiveTest] = useState<string | null>(null);
@@ -125,18 +127,18 @@ export default function Optiscreen() {
   <div className="text-left space-y-1">
     <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
       <Link to="/" >
-        Dashboard
+        {t("dashboard")}
       </Link>
 
       <span className="text-muted-foreground">›</span>
 
       <span className="text-gradient-head">
-        OptiScreen
+        {t("optiscreen")}
       </span>
     </h1>
 
     <p className="text-lg text-muted-foreground max-w-2xl">
-      AI-powered eye screening tests
+      {t("desc1")}
     </p>
   </div>
 
@@ -206,7 +208,7 @@ export default function Optiscreen() {
             onClick={() => setShowSymptoms(null)}
             className="mb-4"
           >
-            ← Back to Tests
+            ← {t("back")}
           </Button>
           
           <Card className="bg-gradient-card border-0 shadow-custom-lg">
@@ -226,7 +228,7 @@ export default function Optiscreen() {
                 <div>
                   <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                     <AlertCircle className="w-5 h-5 text-warning" />
-                    Common Symptoms
+                    {t("symptomhead")}
                   </h3>
                   <ul className="space-y-3">
                     {selectedTestData.symptoms.map((symptom, index) => (
@@ -240,31 +242,31 @@ export default function Optiscreen() {
                 
                 <div className="space-y-4">
                   <div className="bg-muted/50 rounded-lg p-4">
-                    <h4 className="font-semibold mb-2">Test Information</h4>
+                    <h4 className="font-semibold mb-2">{t("testInformation")}</h4>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Duration:</span>
+                        <span className="text-muted-foreground">{t("duration")}</span>
                         <span className="font-medium">{selectedTestData.duration}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Accuracy:</span>
+                        <span className="text-muted-foreground">{t("accuracy")}</span>
                         <span className="font-medium">{selectedTestData.accuracy}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Method:</span>
-                        <span className="font-medium">AI Analysis</span>
+                        <span className="text-muted-foreground">{t("method")}</span>
+                        <span className="font-medium">{t("aiAnanlysis")}</span>
                       </div>
                     </div>
                   </div>
                   
                   <Card className="bg-primary/5 border-primary/20">
                     <CardContent className="p-4">
-                      <h4 className="font-semibold text-black dark:text-white mb-2">Before Starting</h4>
+                      <h4 className="font-semibold text-black dark:text-white mb-2">{t("beforeStarting")}</h4>
                       <ul className="text-sm space-y-1 text-muted-foreground">
-                        <li>• Ensure good lighting conditions</li>
-                        <li>• Clean your camera lens</li>
-                        <li>• Follow on-screen instructions carefully</li>
-                        <li>• Keep your device stable</li>
+                        <li>•{t("goodLighting")}</li>
+                        <li>• {t("cleanLens")}</li>
+                        <li>• {t("followInstructions")}</li>
+                        <li>• {t("keepDeviceStable")}</li>
                       </ul>
                     </CardContent>
                   </Card>
@@ -278,7 +280,7 @@ export default function Optiscreen() {
                   className="flex-1"
                   onClick={() => handleStartTest(selectedTestData.id)}
                 >
-                  Start Test Now
+                 {t("startTestNow")}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button 
@@ -286,7 +288,7 @@ export default function Optiscreen() {
                   size="lg"
                   onClick={() => setShowSymptoms(null)}
                 >
-                  Choose Different Test
+                  {t("chooseDifferentTest")}
                 </Button>
               </div>
             </CardContent>

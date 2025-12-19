@@ -17,6 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar"; // your UI Calendar component
+import { useTranslation } from "react-i18next";
 
 import { History, Calendar as CalendarIcon, User, FileText, Plus, Eye, Trash2 } from "lucide-react"; // renamed lucide Calendar
 
@@ -26,6 +27,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function EyeChronicle() {
+  const { t } = useTranslation();
+
   const [medicalHistory, setMedicalHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -145,29 +148,29 @@ export default function EyeChronicle() {
       <div className="flex items-center justify-between">
        <div className="text-left space-y-1">
            <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
-             <Link to="/">Dashboard</Link>
+             <Link to="/">{t("dashboard")}</Link>
              <span className="text-muted-foreground">›</span>
-             <span className="text-gradient-head">EyeChronical</span>
+             <span className="text-gradient-head">{t("eyechronicle_title")}</span>
            </h1>
      
            <p className="text-lg text-muted-foreground max-w-2xl">
-          Your complete eye history
+          {t("eyechronicle_subtitle")}
            </p>
          </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button className="gap-2" variant="secondary">
               <Plus className="h-5 w-5" />
-              Add Record
+              {t("add_record")}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>Add Medical Record</DialogTitle>
+              <DialogTitle>{t("add_medical_record")}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Date</Label>
+                <Label>{t("date")}</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -178,7 +181,7 @@ export default function EyeChronicle() {
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+                      {selectedDate ? format(selectedDate, "PPP") : <span>{t("pick_date")}</span>}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 bg-background border border-border rounded-md shadow-lg" align="start">
@@ -193,64 +196,64 @@ export default function EyeChronicle() {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="condition">Condition/Diagnosis *</Label>
+                <Label htmlFor="condition"> {t("condition_diagnosis")} *</Label>
                 <Input
                   id="condition"
                   value={formData.condition_name}
                   onChange={(e) => setFormData({ ...formData, condition_name: e.target.value })}
-                  placeholder="e.g., Myopia progression"
+                  placeholder={t("condition_placeholder")}
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="doctor">Doctor Name</Label>
+                <Label htmlFor="doctor">{t("doctor_name")}</Label>
                 <Input
                   id="doctor"
                   value={formData.doctor_name}
                   onChange={(e) => setFormData({ ...formData, doctor_name: e.target.value })}
-                  placeholder="e.g., Dr. Sarah Johnson"
+                  placeholder={t("doctor_placeholder")}
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="treatment">Treatment</Label>
+                <Label htmlFor="treatment">{t("treatment")}</Label>
                 <Input
                   id="treatment"
                   value={formData.treatment}
                   onChange={(e) => setFormData({ ...formData, treatment: e.target.value })}
-                  placeholder="e.g., Updated prescription"
+                  placeholder={t("treatment_placeholder")}
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="status">Status</Label>
+                <Label htmlFor="status">{t("status")}</Label>
                 <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value })}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
+                    <SelectValue placeholder={t("select_status")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ongoing">Ongoing</SelectItem>
-                    <SelectItem value="resolved">Resolved</SelectItem>
+                    <SelectItem value="ongoing">{t("status_ongoing")}</SelectItem>
+                    <SelectItem value="resolved">{t("status_resolved")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="notes">Notes</Label>
+                <Label htmlFor="notes">{t("notes")}</Label>
                 <Textarea
                   id="notes"
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  placeholder="Additional notes..."
+                  placeholder={t("notes_placeholder")}
                 />
               </div>
               
               <div className="flex gap-2">
                 <Button onClick={handleSubmit} className="flex-1">
-                  Add Record
+                {t("add_record")}
                 </Button>
                 <Button variant="outline" onClick={() => setOpen(false)}>
-                  Cancel
+                {t("cancel")}
                 </Button>
               </div>
             </div>
@@ -263,7 +266,7 @@ export default function EyeChronicle() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-black">Total Records</p>
+                <p className="text-sm text-black">{t("total_records")}</p>
                 <p className="text-3xl font-bold text-black">{medicalHistory.length}</p>
               </div>
               <History className="h-6 w-6 text-secondary" />
@@ -274,9 +277,9 @@ export default function EyeChronicle() {
 
       <div className="space-y-4">
         {loading ? (
-          <p className="text-center text-black">Loading...</p>
+          <p className="text-center text-black">{t("loading")}</p>
         ) : medicalHistory.length === 0 ? (
-          <p className="text-center text-black">No medical records found. Add your first record!</p>
+          <p className="text-center text-black">{t("no_medical_records")}</p>
         ) : (
           medicalHistory.map((record) => (
             <Card key={record.id} className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm group">
