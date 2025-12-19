@@ -51,11 +51,7 @@ export function Layout({ children }: LayoutProps) {
                     </SidebarTrigger>
 
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                        <span className="text-primary-foreground font-bold text-sm">
-                          O
-                        </span>
-                      </div>
+                      <img src="/fav2-removebg-preview.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
                       <div>
                         <h1 className="text-lg font-semibold text-foreground">
                           OptaNex
@@ -123,11 +119,7 @@ export function Layout({ children }: LayoutProps) {
         >
           <div className="text-center space-y-8 max-w-md mx-auto p-8">
             <div className="space-y-4">
-              <div className="w-20 h-20 mx-auto bg-gradient-primary rounded-2xl flex items-center justify-center shadow-custom-lg">
-                <div className="w-10 h-10 text-primary-foreground font-bold text-2xl flex items-center justify-center">
-                  O
-                </div>
-              </div>
+              <img src="/fav2-removebg-preview.png" alt="OptaNex Logo" className="w-8 h-8 mx-auto rounded-lg" />
               <div>
                 <h1 className="text-4xl font-bold text-foreground mb-2">
                   OptaNex

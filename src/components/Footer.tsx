@@ -7,9 +7,12 @@ export default function Footer() {
 
         {/* Brand */}
         <div>
-          <h3 className="text-xl font-bold text-foreground">
-            OptaNex
-          </h3>
+          <div className="flex items-center gap-3">
+            <img src="/fav2-removebg-preview.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
+            <h3 className="text-xl font-bold text-foreground">
+              OptaNex
+            </h3>
+          </div>
           <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-xs">
             Complete eye care companion built for people with visual impairments.
             Designed with accessibility, medical accuracy, and trust at its core.
