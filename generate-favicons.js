@@ -12,14 +12,14 @@ const sourceImage = path.join(__dirname, 'public', 'favicon-source.png');
 const sizes = [
   { size: 16, name: 'favicon-16x16.png' },
   { size: 32, name: 'favicon-32x32.png' },
-  { size: 48, name: 'android-chrome-48x48.png' },
-  { size: 72, name: 'android-chrome-72x72.png' },
-  { size: 96, name: 'android-chrome-96x96.png' },
-  { size: 128, name: 'android-chrome-128x128.png' },
+  { size: 48, name: 'android-chrome-48x48.png', maskable: true },
+  { size: 72, name: 'android-chrome-72x72.png', maskable: true },
+  { size: 96, name: 'android-chrome-96x96.png', maskable: true },
+  { size: 128, name: 'android-chrome-128x128.png', maskable: true },
   { size: 180, name: 'apple-touch-icon.png' },
-  { size: 192, name: 'android-chrome-192x192.png' },
-  { size: 256, name: 'android-chrome-256x256.png' },
-  { size: 512, name: 'android-chrome-512x512.png' }
+  { size: 192, name: 'android-chrome-192x192.png', maskable: true },
+  { size: 256, name: 'android-chrome-256x256.png', maskable: true },
+  { size: 512, name: 'android-chrome-512x512.png', maskable: true }
 ];
 
 async function generateRoundedFavicon(size, outputPath) {
