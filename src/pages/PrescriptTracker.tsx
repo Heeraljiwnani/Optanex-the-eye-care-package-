@@ -216,7 +216,7 @@ export default function PrescriptTracker() {
   <div className="flex items-start justify-between">
     <div className="text-left space-y-1">
       <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
-        <Link to="/">Dashboard</Link>
+        <Link to="/">{t("dashboard")}</Link>
         <span className="text-muted-foreground">›</span>
         <span className="text-gradient-head">{t("prescripttracker_title")}</span>
 
