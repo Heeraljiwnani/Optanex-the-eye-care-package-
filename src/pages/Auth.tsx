@@ -11,21 +11,21 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
 import { Eye, EyeOff } from "lucide-react";
-
+import { BlinkingLoader } from "@/components/ui/BlinkingLoader";
 
 export default function Auth() {
   const { user, signIn, signUp, loading } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  
+
   // Form states
   const [signInForm, setSignInForm] = useState({ email: '', password: '' });
-  const [signUpForm, setSignUpForm] = useState({ 
-    email: '', 
-    password: '', 
-    confirmPassword: '', 
-    fullName: '' 
+  const [signUpForm, setSignUpForm] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    fullName: ''
   });
 
   // Redirect if already authenticated
@@ -36,9 +36,9 @@ export default function Auth() {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     const { error } = await signIn(signInForm.email, signInForm.password);
-    
+
     if (error) {
       toast({
         title: "Sign in failed",
@@ -51,13 +51,13 @@ export default function Auth() {
         description: "You have successfully signed in."
       });
     }
-    
+
     setIsLoading(false);
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (signUpForm.password !== signUpForm.confirmPassword) {
       toast({
         title: "Password mismatch",
@@ -66,15 +66,15 @@ export default function Auth() {
       });
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     const { error } = await signUp(
-      signUpForm.email, 
-      signUpForm.password, 
+      signUpForm.email,
+      signUpForm.password,
       signUpForm.fullName
     );
-    
+
     if (error) {
       toast({
         title: "Sign up failed",
@@ -87,20 +87,17 @@ export default function Auth() {
         description: "Please check your email to verify your account."
       });
     }
-    
+
     setIsLoading(false);
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-medical-50 to-primary/5 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-medical-50 to-primary/5 p-4 relative">
+      {loading && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-md">
+          <BlinkingLoader text="Signing in..." size="sm" />
+        </div>
+      )}
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-medical-900 mb-2">OptaNex</h1>
@@ -120,7 +117,7 @@ export default function Auth() {
                 <TabsTrigger value="signin">Sign In</TabsTrigger>
                 <TabsTrigger value="signup">Sign Up</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="signin">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
@@ -154,16 +151,16 @@ export default function Auth() {
                       </button>
                     </div>
                   </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
+                  <Button
+                    type="submit"
+                    className="w-full"
                     disabled={isLoading}
                   >
                     {isLoading ? "Signing in..." : "Sign In"}
                   </Button>
                 </form>
               </TabsContent>
-              
+
               <TabsContent value="signup">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">
@@ -219,9 +216,9 @@ export default function Auth() {
                       required
                     />
                   </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
+                  <Button
+                    type="submit"
+                    className="w-full"
                     disabled={isLoading}
                   >
                     {isLoading ? "Creating account..." : "Create Account"}
