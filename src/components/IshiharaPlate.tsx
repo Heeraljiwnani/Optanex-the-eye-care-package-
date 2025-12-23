@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, XCircle, ArrowRight, RefreshCw } from "lucide-react";
 
 type IshiharaPlateProps = {
   size?: number;
@@ -38,8 +42,9 @@ const IshiharaPlate: React.FC<IshiharaPlateProps> = ({
   const [svgContent, setSvgContent] = useState("");
   const [number, setNumber] = useState("");
   const [guess, setGuess] = useState("");
+  const [result, setResult] = useState<'idle' | 'correct' | 'incorrect'>('idle');
 
-  useEffect(() => {
+  const generatePlate = useCallback(() => {
     const generatedNumber = randomInt(1, 99).toString();
 
     const backgroundDots = generateDots(
@@ -76,33 +81,86 @@ const IshiharaPlate: React.FC<IshiharaPlateProps> = ({
 
     setSvgContent(svg);
     setNumber(generatedNumber);
+    setResult('idle');
+    setGuess("");
   }, [size, totalDots]);
 
-  const handleSubmit = () => {
-    const correct = guess === number;
+  useEffect(() => {
+    generatePlate();
+  }, [generatePlate]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!guess) return;
+
+    const isCorrect = guess.trim() === number;
+    setResult(isCorrect ? 'correct' : 'incorrect');
+
     if (onTestComplete) {
-      onTestComplete({ number, guess, correct });
+      onTestComplete({ number, guess, correct: isCorrect });
     }
-    alert(correct ? "✅ Correct!" : `❌ Wrong. It was ${number}`);
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4">
-      <div dangerouslySetInnerHTML={{ __html: svgContent }} />
-      <input
-        type="text"
-        placeholder="Enter the number you see"
-        value={guess}
-        onChange={(e) => setGuess(e.target.value)}
-        className="border p-2 rounded"
-      />
-      <button
-        onClick={handleSubmit}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Submit
-      </button>
-    </div>
+    <Card className="w-full max-w-lg mx-auto bg-card/50 backdrop-blur-sm border-2">
+      <CardHeader>
+        <CardTitle className="text-center flex items-center justify-between">
+          <span>What number do you see?</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={generatePlate}
+            title="Regenerate Test"
+            className="h-8 w-8"
+          >
+            <RefreshCw className="h-4 w-4" />
+          </Button>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col items-center space-y-6">
+        <div
+          dangerouslySetInnerHTML={{ __html: svgContent }}
+          className="rounded-full overflow-hidden shadow-inner bg-white/10"
+        />
+
+        {result === 'idle' ? (
+          <form onSubmit={handleSubmit} className="flex gap-4 w-full max-w-[250px]">
+            <Input
+              type="text"
+              pattern="[0-9]*"
+              maxLength={2}
+              placeholder="00"
+              value={guess}
+              onChange={(e) => setGuess(e.target.value)}
+              className="text-center font-bold text-lg"
+              autoFocus
+            />
+            <Button type="submit">Submit</Button>
+          </form>
+        ) : (
+          <div className="flex flex-col items-center space-y-4 animate-in fade-in slide-in-from-bottom-2 w-full">
+            {result === 'correct' ? (
+              <div className="flex items-center gap-2 text-green-600 dark:text-green-500 font-bold text-xl p-4 bg-green-50 dark:bg-green-950/30 rounded-lg w-full justify-center">
+                <CheckCircle className="w-6 h-6" />
+                <span>Correct!</span>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center gap-1 text-destructive font-bold text-xl p-4 bg-destructive/10 rounded-lg w-full">
+                <div className="flex items-center gap-2">
+                  <XCircle className="w-6 h-6" />
+                  <span>Incorrect</span>
+                </div>
+                <span className="text-base font-normal text-muted-foreground">The number was {number}</span>
+              </div>
+            )}
+
+            <Button onClick={generatePlate} className="gap-2 w-full max-w-[200px]" variant="default">
+              Next Test <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

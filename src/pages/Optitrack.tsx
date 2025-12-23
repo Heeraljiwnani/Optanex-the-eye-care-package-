@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,8 +16,10 @@ import {
   BarChart3,
   Activity,
   Minus,
-  Trash2
+  Trash2,
+  HelpCircle
 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -24,6 +27,16 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from "recharts";
 
 export default function Optitrack() {
   const { t } = useTranslation();
@@ -146,16 +159,51 @@ export default function Optitrack() {
   const leftTrend = previousEntry && latestEntry ? getTrend(latestEntry.left_eye_power || 0, previousEntry.left_eye_power || 0) : null;
   const rightTrend = previousEntry && latestEntry ? getTrend(latestEntry.right_eye_power || 0, previousEntry.right_eye_power || 0) : null;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
     <div className="p-6 space-y-8">
       {/* Header */}
-      <div className="space-y-4">
+
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="space-y-4"
+      >
         <div className="flex items-start justify-between">
           <div className="text-left space-y-1">
             <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
               <Link to="/">{t("dashboard")}</Link>
               <span className="text-muted-foreground">›</span>
               <span className="text-gradient-head">{t("optitrack")}</span>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" size="icon" className="ml-2 rounded-full hover:bg-primary/10">
+                    <HelpCircle className="h-7 w-7 text-dashboard" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-card border-0">
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl font-bold text-gradient-head mb-4">{t("optitrack_help_title")}</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 text-foreground/90 leading-relaxed whitespace-pre-wrap">
+                    {t("optitrack_help_content")}
+                  </div>
+                </DialogContent>
+              </Dialog>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl">{t("trackDescription")}</p>
           </div>
@@ -165,192 +213,265 @@ export default function Optitrack() {
             {t("addReading")}
           </Button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Current Status Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg flex items-center gap-2 text-black">
-              <Eye className="h-5 w-5 text-secondary" />
-              {t("leftEye")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between text-black">
-              <div>
-                <p className="text-3xl font-bold text-black">{latestEntry?.left_eye_power || '--'}</p>
-                <p className="text-sm text-muted-foreground">{t("diopters")}</p>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <motion.div variants={itemVariants}>
+          <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm h-full">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2 text-black">
+                <Eye className="h-5 w-5 text-secondary" />
+                {t("leftEye")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-black">
+                <div>
+                  <p className="text-3xl font-bold text-black">{latestEntry?.left_eye_power || '--'}</p>
+                  <p className="text-sm text-muted-foreground">{t("diopters")}</p>
+                </div>
+                {leftTrend && (
+                  <div className="flex items-center gap-1">
+                    <leftTrend.icon className={`h-5 w-5 ${leftTrend.color}`} />
+                    <span className={`text-sm ${leftTrend.color}`}>{t(leftTrend.type)}</span>
+                  </div>
+                )}
               </div>
-              {leftTrend && (
-                <div className="flex items-center gap-1">
-                  <leftTrend.icon className={`h-5 w-5 ${leftTrend.color}`} />
-                  <span className={`text-sm ${leftTrend.color}`}>{t(leftTrend.type)}</span>
+              {latestEntry?.left_eye_cylinder && (
+                <div className="mt-2 pt-2 border-t">
+                  <p className="text-sm text-muted-foreground">
+                    {t("astigmatism")}: {latestEntry.left_eye_cylinder}
+                  </p>
                 </div>
               )}
-            </div>
-            {latestEntry?.left_eye_cylinder && (
-              <div className="mt-2 pt-2 border-t">
-                <p className="text-sm text-muted-foreground">
-                  {t("astigmatism")}: {latestEntry.left_eye_cylinder}
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg flex items-center gap-2 text-black">
-              <Eye className="h-5 w-5 text-secondary" />
-              {t("rightEye")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between text-black">
-              <div>
-                <p className="text-3xl font-bold text-black">{latestEntry?.right_eye_power || '--'}</p>
-                <p className="text-sm text-muted-foreground">{t("diopters")}</p>
+        <motion.div variants={itemVariants}>
+          <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm h-full">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2 text-black">
+                <Eye className="h-5 w-5 text-secondary" />
+                {t("rightEye")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-black">
+                <div>
+                  <p className="text-3xl font-bold text-black">{latestEntry?.right_eye_power || '--'}</p>
+                  <p className="text-sm text-muted-foreground">{t("diopters")}</p>
+                </div>
+                {rightTrend && (
+                  <div className="flex items-center gap-1">
+                    <rightTrend.icon className={`h-5 w-5 ${rightTrend.color}`} />
+                    <span className={`text-sm ${rightTrend.color}`}>{t(rightTrend.type)}</span>
+                  </div>
+                )}
               </div>
-              {rightTrend && (
-                <div className="flex items-center gap-1">
-                  <rightTrend.icon className={`h-5 w-5 ${rightTrend.color}`} />
-                  <span className={`text-sm ${rightTrend.color}`}>{t(rightTrend.type)}</span>
+              {latestEntry?.right_eye_cylinder && (
+                <div className="mt-2 pt-2 border-t">
+                  <p className="text-sm text-muted-foreground">
+                    {t("astigmatism")}: {latestEntry.right_eye_cylinder}
+                  </p>
                 </div>
               )}
-            </div>
-            {latestEntry?.right_eye_cylinder && (
-              <div className="mt-2 pt-2 border-t">
-                <p className="text-sm text-muted-foreground">
-                  {t("astigmatism")}: {latestEntry.right_eye_cylinder}
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-lg flex items-center gap-2 text-black">
-              <Activity className="h-5 w-5 text-accent" />
-              {t("lastCheckup")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold text-black">
-              {latestEntry ? format(new Date(latestEntry.checkup_date), "MMM dd") : '--'}
-            </p>
-            <p className="text-sm text-muted-foreground">
-              {latestEntry ? format(new Date(latestEntry.checkup_date), "yyyy") : '--'}
-            </p>
-            <div className="mt-2 pt-2 border-t">
-              <Badge variant="secondary" className="text-xs">
-                {powerHistory.length} {t("totalReadings")}
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+        <motion.div variants={itemVariants}>
+          <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm h-full">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2 text-black">
+                <Activity className="h-5 w-5 text-accent" />
+                {t("lastCheckup")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold text-black">
+                {latestEntry ? format(new Date(latestEntry.checkup_date), "MMM dd") : '--'}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {latestEntry ? format(new Date(latestEntry.checkup_date), "yyyy") : '--'}
+              </p>
+              <div className="mt-2 pt-2 border-t">
+                <Badge variant="secondary" className="text-xs">
+                  {powerHistory.length} {t("totalReadings")}
+                </Badge>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </motion.div>
 
       {/* Add New Entry Form */}
       {showAddForm && (
-        <Card className="bg-gradient-card border-0 shadow-custom-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Plus className="h-5 w-5" />
-              {t("addNewReading")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>{t("dateOfCheckup")}</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal",
-                        !selectedDate && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {selectedDate ? format(selectedDate, "PPP") : t("pickDate")}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 bg-background border border-border rounded-md shadow-lg" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={selectedDate}
-                      onSelect={setSelectedDate}
-                      initialFocus
-                      className="p-3 pointer-events-auto"
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+        >
+          <Card className="bg-gradient-card border-0 shadow-custom-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Plus className="h-5 w-5" />
+                {t("addNewReading")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>{t("dateOfCheckup")}</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !selectedDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {selectedDate ? format(selectedDate, "PPP") : t("pickDate")}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 bg-background border border-border rounded-md shadow-lg" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={setSelectedDate}
+                        initialFocus
+                        className="p-3 pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">{t("leftEye")}</h3>
+                  <div className="space-y-2">
+                    <Label htmlFor="leftEye">{t("sphericalPower")}</Label>
+                    <Input
+                      id="leftEye"
+                      type="number"
+                      step="0.25"
+                      placeholder="-2.50"
+                      value={newEntry.leftEye}
+                      onChange={(e) => setNewEntry({ ...newEntry, leftEye: e.target.value })}
                     />
-                  </PopoverContent>
-                </Popover>
-              </div>
-            </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="leftAstigmatism">{t("astigmatism")}</Label>
+                    <Input
+                      id="leftAstigmatism"
+                      type="number"
+                      step="0.25"
+                      placeholder="-0.50"
+                      value={newEntry.leftAstigmatism}
+                      onChange={(e) => setNewEntry({ ...newEntry, leftAstigmatism: e.target.value })}
+                    />
+                  </div>
+                </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">{t("leftEye")}</h3>
-                <div className="space-y-2">
-                  <Label htmlFor="leftEye">{t("sphericalPower")}</Label>
-                  <Input
-                    id="leftEye"
-                    type="number"
-                    step="0.25"
-                    placeholder="-2.50"
-                    value={newEntry.leftEye}
-                    onChange={(e) => setNewEntry({ ...newEntry, leftEye: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="leftAstigmatism">{t("astigmatism")}</Label>
-                  <Input
-                    id="leftAstigmatism"
-                    type="number"
-                    step="0.25"
-                    placeholder="-0.50"
-                    value={newEntry.leftAstigmatism}
-                    onChange={(e) => setNewEntry({ ...newEntry, leftAstigmatism: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">{t("rightEye")}</h3>
-                <div className="space-y-2">
-                  <Label htmlFor="rightEye">{t("sphericalPower")}</Label>
-                  <Input
-                    id="rightEye"
-                    type="number"
-                    step="0.25"
-                    placeholder="-2.75"
-                    value={newEntry.rightEye}
-                    onChange={(e) => setNewEntry({ ...newEntry, rightEye: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="rightAstigmatism">{t("astigmatism")}</Label>
-                  <Input
-                    id="rightAstigmatism"
-                    type="number"
-                    step="0.25"
-                    placeholder="-0.75"
-                    value={newEntry.rightAstigmatism}
-                    onChange={(e) => setNewEntry({ ...newEntry, rightAstigmatism: e.target.value })}
-                  />
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">{t("rightEye")}</h3>
+                  <div className="space-y-2">
+                    <Label htmlFor="rightEye">{t("sphericalPower")}</Label>
+                    <Input
+                      id="rightEye"
+                      type="number"
+                      step="0.25"
+                      placeholder="-2.75"
+                      value={newEntry.rightEye}
+                      onChange={(e) => setNewEntry({ ...newEntry, rightEye: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="rightAstigmatism">{t("astigmatism")}</Label>
+                    <Input
+                      id="rightAstigmatism"
+                      type="number"
+                      step="0.25"
+                      placeholder="-0.75"
+                      value={newEntry.rightAstigmatism}
+                      onChange={(e) => setNewEntry({ ...newEntry, rightAstigmatism: e.target.value })}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex gap-4">
-              <Button onClick={handleAddEntry} className="flex-1">{t("saveReading")}</Button>
-              <Button variant="outline" onClick={() => setShowAddForm(false)}>{t("cancel")}</Button>
-            </div>
-          </CardContent>
-        </Card>
+              <div className="flex gap-4">
+                <Button onClick={handleAddEntry} className="flex-1">{t("saveReading")}</Button>
+                <Button variant="outline" onClick={() => setShowAddForm(false)}>{t("cancel")}</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
+
+      {/* Vision Trends Graph */}
+      {powerHistory.length > 1 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-black">
+                <TrendingUp className="h-5 w-5 text-primary" />
+                {t("visionTrends", "Vision Trends")}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={powerHistory}>
+                    <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+                    <XAxis
+                      dataKey="checkup_date"
+                      tickFormatter={(date) => format(new Date(date), "MMM dd")}
+                      stroke="#888888"
+                    />
+                    <YAxis stroke="#888888" />
+                    <Tooltip
+                      contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                      labelFormatter={(date) => format(new Date(date), "MMM dd, yyyy")}
+                    />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="right_eye_power"
+                      name={t("rightEye")}
+                      stroke="hsl(var(--primary))"
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="left_eye_power"
+                      name={t("leftEye")}
+                      stroke="hsl(var(--secondary))"
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
 
       {/* Power History */}

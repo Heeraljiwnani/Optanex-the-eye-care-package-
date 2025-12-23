@@ -2,7 +2,15 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
-import { Menu, LogOut, User } from "lucide-react";
+import { Menu, LogOut, User, Settings, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { SplashScreen } from "@/components/SplashScreen";
 import { AuthDialog } from "@/components/AuthDialog";
@@ -16,15 +24,17 @@ import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import { Languages } from "lucide-react";
 export function Layout({ children }: LayoutProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, loading, signOut } = useAuth();
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
-  
 
   // While loading, show splash screen
   if (loading) {
     return <SplashScreen />;
   }
+
+
+
 
 
   return (
@@ -64,46 +74,53 @@ export function Layout({ children }: LayoutProps) {
                   </div>
 
                   <div className="flex items-center gap-2">
-                  <ThemeToggle />
-                  <Button
-  variant="outline"
-  size="sm"
-  onClick={() =>
-    i18n.changeLanguage(i18n.language === "en" ? "hi" : "en")
-  }
-  className="flex items-center gap-2 text-white dark:text-white"
->
-  <Languages className="h-4 w-4 text-white" />
-  {i18n.language === "en" ? "हिंदी" : "EN"}
-</Button>
-
-                    <div className="text-right hidden sm:block">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <User className="h-4 w-4" />
-                        {user.email}
-                      </div>
-                    </div>
+                    <ThemeToggle />
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={signOut}
-                      className="ml-2 text-white"
+                      onClick={() =>
+                        i18n.changeLanguage(i18n.language === "en" ? "hi" : "en")
+                      }
+                      className="flex items-center gap-2 text-white dark:text-white"
                     >
-                      <LogOut className="h-4 w-4 mr-2 text-white" />
-                      Sign Out
+                      <Languages className="h-4 w-4 text-white" />
+                      {i18n.language === "en" ? "हिंदी" : "EN"}
                     </Button>
+
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground border border-gray-500/50 rounded-full px-4 py-1.5 bg-black/5 dark:bg-white/5 cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                          <User className="h-4 w-4" />
+                          <span className="max-w-[150px] truncate hidden sm:inline-block">{user.email}</span>
+                          <ChevronDown className="h-3 w-3 opacity-50" />
+                        </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-56">
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="cursor-pointer" onClick={() => window.location.href = '/settings'}>
+                          <Settings className="mr-2 h-4 w-4" />
+                          <span>{t("settings")}</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="cursor-pointer text-destructive focus:text-destructive" onClick={signOut}>
+                          <LogOut className="mr-2 h-4 w-4" />
+                          <span>Sign Out</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </div>
               </header>
 
               {/* Main Content */}
-         {/* Main Content */}
-<main className="flex-1 overflow-auto">
-  {children}
-</main>
+              {/* Main Content */}
+              <main className="flex-1 overflow-auto">
+                {children}
+              </main>
 
-{/* Footer */}
-<Footer />
+              {/* Footer */}
+              <Footer />
 
             </div>
           </SidebarProvider>
@@ -151,6 +168,6 @@ export function Layout({ children }: LayoutProps) {
         </motion.div>
       )}
     </AnimatePresence>
-    
+
   );
 }
