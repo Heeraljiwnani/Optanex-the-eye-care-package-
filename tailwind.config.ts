@@ -19,6 +19,7 @@ export default {
 		},
 		extend: {
 			colors: {
+				dashboard: 'hsl(var(--dashboard-color))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

@@ -71,9 +71,9 @@ export function Layout({ children }: LayoutProps) {
   onClick={() =>
     i18n.changeLanguage(i18n.language === "en" ? "hi" : "en")
   }
-  className="flex items-center gap-2 text-black dark:text-white"
+  className="flex items-center gap-2 text-white dark:text-white"
 >
-  <Languages className="h-4 w-4" />
+  <Languages className="h-4 w-4 text-white" />
   {i18n.language === "en" ? "हिंदी" : "EN"}
 </Button>
 
@@ -87,9 +87,9 @@ export function Layout({ children }: LayoutProps) {
                       variant="outline"
                       size="sm"
                       onClick={signOut}
-                      className="ml-2 text-black dark:text-white"
+                      className="ml-2 text-white"
                     >
-                      <LogOut className="h-4 w-4 mr-2 text-black dark:text-white" />
+                      <LogOut className="h-4 w-4 mr-2 text-white" />
                       Sign Out
                     </Button>
                   </div>
