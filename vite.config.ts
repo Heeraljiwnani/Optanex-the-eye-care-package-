@@ -21,6 +21,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      devOptions: {
+        enabled: false, // 👈 THIS IS CRITICAL
+      },
       includeAssets: ["favicon.svg", "robots.txt"],
       manifest: {
         name: "Optanex",
@@ -43,5 +46,6 @@ export default defineConfig({
         ],
       },
     }),
+    
   ],
 });

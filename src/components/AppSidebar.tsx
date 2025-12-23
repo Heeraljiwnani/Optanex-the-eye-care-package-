@@ -52,11 +52,11 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" className="border-r border-border">
-      <SidebarContent className="bg-card flex flex-col h-full">
+      <SidebarContent className="bg-card flex flex-col h-full pt-6">
 
         <SidebarGroup>
           <SidebarGroupLabel
-            className={`${collapsed ? "sr-only" : ""} text-muted-foreground font-medium`}
+            className={`${collapsed ? "sr-only" : ""} text-black font-medium`}
           >
             Eye Care Suite
           </SidebarGroupLabel>
@@ -88,7 +88,7 @@ export function AppSidebar() {
                             />
 
                             {!collapsed && (
-                              <span className="text-sm font-medium transition-all duration-200">
+                              <span className="text-sm font-medium transition-all duration-200 text-black hover:text-dashboard">
                                 {item.title}
                               </span>
                             )}

@@ -11,7 +11,7 @@ All colors MUST be HSL.
     /* OptaNex Healthcare Theme */
     --background: 215, 39%, 87%;
     --foreground: 215 25% 15%;
-
+    --dashboard-color: 204, 64%, 50%;
     --card:214, 19%, 78%;
     --card-foreground: 215 25% 15%;
     --contrast: 179, 44%, 55%;
@@ -117,9 +117,11 @@ All colors MUST be HSL.
 --footer-accent: 200 85% 38%;    /* medical blue accent */
 
 --icon-glow-blue: 210 100% 55%;
+
   }
 
   .dark {
+    --dashboard-color: 204, 64%, 50%;
     --background: 226, 60%, 10%;
     --foreground: 210 40% 98%;
     --icon-glow-blue: 210 100% 60%;
