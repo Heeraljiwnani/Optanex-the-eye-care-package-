@@ -19,12 +19,14 @@ import { format } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import { useSpeech } from "@/hooks/useSpeech";
 
 
 
 
 export default function Dashboard() {
   const { t, i18n } = useTranslation();
+  const { speak } = useSpeech();
   const features = [
     {
       title: t("optiscreen"),
@@ -256,7 +258,29 @@ export default function Dashboard() {
               variants={itemVariants}
               whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
             >
-              <Card className="group hover:shadow-custom-lg transition-all duration-300 border-0 bg-[hsl(var(--gradient-card))] text-black h-full">
+              <Card
+                className="group hover:shadow-custom-lg transition-all duration-300 border-0 bg-[hsl(var(--gradient-card))] text-black h-full cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (clickTimeoutRef.current) {
+                    clearTimeout(clickTimeoutRef.current);
+                  }
+                  clickTimeoutRef.current = setTimeout(() => {
+                    navigate(feature.href);
+                    clickTimeoutRef.current = null;
+                  }, 400);
+                }}
+                onDoubleClick={(e) => {
+                  e.preventDefault();
+                  if (clickTimeoutRef.current) {
+                    clearTimeout(clickTimeoutRef.current);
+                    clickTimeoutRef.current = null;
+                  }
+                  // @ts-ignore
+                  const text = t(feature.verbalAlertKey);
+                  speak(text, i18n.language === 'hi' ? 'hi' : 'en');
+                }}
+              >
                 <CardHeader className="pb-4">
                   <div className="flex items-center justify-between">
                     <div className={`w-12 h-12 ${feature.color} rounded-lg flex items-center justify-center`}>
@@ -273,28 +297,6 @@ export default function Dashboard() {
                   <Button
                     variant="outline"
                     className="w-full text-white mt-auto"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (clickTimeoutRef.current) {
-                        clearTimeout(clickTimeoutRef.current);
-                      }
-                      clickTimeoutRef.current = setTimeout(() => {
-                        navigate(feature.href);
-                        clickTimeoutRef.current = null;
-                      }, 400);
-                    }}
-                    onDoubleClick={(e) => {
-                      e.preventDefault();
-                      if (clickTimeoutRef.current) {
-                        clearTimeout(clickTimeoutRef.current);
-                        clickTimeoutRef.current = null;
-                      }
-                      // @ts-ignore
-                      const text = t(feature.verbalAlertKey);
-                      const utterance = new SpeechSynthesisUtterance(text);
-                      utterance.lang = i18n.language === 'hi' ? 'hi-IN' : 'en-US';
-                      window.speechSynthesis.speak(utterance);
-                    }}
                   >
                     {t("open")}{feature.title} <ArrowRight className="ml-2 h-4 w-4 text-white" />
                   </Button>

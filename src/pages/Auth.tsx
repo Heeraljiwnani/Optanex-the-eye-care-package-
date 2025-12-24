@@ -153,7 +153,7 @@ export default function Auth() {
                   </div>
                   <Button
                     type="submit"
-                    className="w-full"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all"
                     disabled={isLoading}
                   >
                     {isLoading ? "Signing in..." : "Sign In"}
@@ -218,7 +218,7 @@ export default function Auth() {
                   </div>
                   <Button
                     type="submit"
-                    className="w-full"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all"
                     disabled={isLoading}
                   >
                     {isLoading ? "Creating account..." : "Create Account"}

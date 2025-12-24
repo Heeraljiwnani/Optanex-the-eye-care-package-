@@ -246,7 +246,7 @@ export default function EyeChronicle() {
         <div className="flex gap-2">
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="gap-2">
+              <Button className="gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all">
                 <Plus className="h-5 w-5" />
                 {t("add_record")}
               </Button>

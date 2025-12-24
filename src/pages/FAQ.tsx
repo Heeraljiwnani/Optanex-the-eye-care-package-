@@ -79,7 +79,7 @@ export default function FAQ() {
                                 { value: "item-6", q: t("faq_q6"), a: t("faq_a6") }
                             ].map((faq, index) => (
                                 <AccordionItem key={index} value={faq.value} className="border-b-border/40">
-                                    <AccordionTrigger className="text-left text-lg hover:no-underline hover:text-primary transition-colors">
+                                    <AccordionTrigger className="text-left text-lg hover:no-underline hover:text-blue-600 transition-colors">
                                         {faq.q}
                                     </AccordionTrigger>
                                     <AccordionContent className="text-muted-foreground leading-relaxed">

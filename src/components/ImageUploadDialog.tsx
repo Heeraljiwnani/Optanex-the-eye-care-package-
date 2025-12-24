@@ -212,7 +212,7 @@ export function ImageUploadDialog({
                         Select a retinal image file from your device
                       </p>
                       <label htmlFor="file-upload" className="cursor-pointer">
-                        <Button asChild>
+                        <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all">
                           <span>Choose File</span>
                         </Button>
                         <input
@@ -352,8 +352,8 @@ export function ImageUploadDialog({
                                   ? "No signs of diabetic retinopathy detected. Continue regular monitoring."
                                   : "Diabetic retinopathy signs detected. Please consult with an ophthalmologist for further evaluation and treatment recommendations."
                                 : apiResponse.class_name === "No AMD"
-                                ? "No signs of AMD detected. Continue regular monitoring."
-                                : "Signs of AMD detected. Please consult with an ophthalmologist for further evaluation and treatment recommendations."}
+                                  ? "No signs of AMD detected. Continue regular monitoring."
+                                  : "Signs of AMD detected. Please consult with an ophthalmologist for further evaluation and treatment recommendations."}
                             </p>
                           </div>
                         </div>

@@ -33,12 +33,12 @@ export function BlinkingLoader({ text = "Loading...", size = "md", className = "
             }
           `
                 }} />
-                <div className={`${sizeClasses[size]} bg-primary/10 rounded-full flex items-center justify-center animate-blink`}>
-                    <Eye className={`${iconSizes[size]} text-primary`} />
+                <div className={`${sizeClasses[size]} bg-blue-100 dark:bg-blue-500/20 rounded-full flex items-center justify-center animate-blink`}>
+                    <Eye className={`${iconSizes[size]} text-blue-600 dark:text-blue-400`} />
                 </div>
             </div>
             {text && (
-                <p className="mt-8 text-lg font-medium text-muted-foreground animate-pulse">
+                <p className="mt-8 text-lg font-medium text-blue-600 dark:text-blue-400 animate-pulse">
                     {text}
                 </p>
             )}

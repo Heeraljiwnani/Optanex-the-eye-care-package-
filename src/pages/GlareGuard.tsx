@@ -133,7 +133,7 @@ export default function GlareGuard() {
             </Dialog>
 
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">{t("glareGuardDesc")}</p>
+          <p className="text-lg text-muted-foreground max-w-2xl">{t("glareguard_subtitle")}</p>
         </div>
       </motion.div>
       {isActive && (
@@ -155,7 +155,7 @@ export default function GlareGuard() {
           <Card className="bg-[hsl(var(--gradient-card))] border-0 shadow-custom-sm h-full">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-black">
-                <Monitor className="h-5 w-5 text-primary" />
+                <Monitor className="h-5 w-5 text-black" />
                 {t("screenTimeTitle")}
               </CardTitle>
             </CardHeader>
@@ -163,7 +163,7 @@ export default function GlareGuard() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 bg-primary/10 rounded-lg">
                   <p className="text-sm font-medium text-black">{t("dailyScreenTime")}</p>
-                  <p className="text-2xl font-bold text-primary">{formatTime(screenTime)}</p>
+                  <p className="text-2xl font-bold text-black">{formatTime(screenTime)}</p>
                 </div>
                 <div className="p-4 bg-secondary/10 rounded-lg">
                   <p className="text-sm font-medium text-black">{t("breakInterval")}</p>
@@ -198,10 +198,11 @@ export default function GlareGuard() {
             <CardContent>
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-black">{t("blueLightFilter")}</span>
+                  <span className="text-black">{t("blue_light_filter")}</span>
                   <Switch
                     checked={isBlueLightFilterActive}
                     onCheckedChange={setIsBlueLightFilterActive}
+                    className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-gray-400 dark:data-[state=unchecked]:bg-gray-700"
                   />
                 </div>
                 <div className="space-y-2 text-black">
@@ -253,7 +254,11 @@ export default function GlareGuard() {
                 {t("blue_light_filter_desc")}
               </p>
             </div>
-            <Switch checked={blueFilterEnabled} onCheckedChange={toggleBlueFilter} />
+            <Switch
+              checked={blueFilterEnabled}
+              onCheckedChange={toggleBlueFilter}
+              className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-gray-400 dark:data-[state=unchecked]:bg-gray-700"
+            />
           </div>
 
           <div className="flex justify-between">
@@ -263,7 +268,11 @@ export default function GlareGuard() {
                 {t("break_reminders_desc")}
               </p>
             </div>
-            <Switch checked={breakRemindersEnabled} onCheckedChange={toggleBreakReminders} />
+            <Switch
+              checked={breakRemindersEnabled}
+              onCheckedChange={toggleBreakReminders}
+              className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-gray-400 dark:data-[state=unchecked]:bg-gray-700"
+            />
           </div>
         </CardContent>
       </Card>

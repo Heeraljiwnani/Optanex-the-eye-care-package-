@@ -103,7 +103,7 @@ export function Layout({ children }: LayoutProps) {
                           <span>{t("settings")}</span>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="cursor-pointer text-destructive focus:text-destructive" onClick={signOut}>
+                        <DropdownMenuItem className="cursor-pointer text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400" onClick={signOut}>
                           <LogOut className="mr-2 h-4 w-4" />
                           <span>Sign Out</span>
                         </DropdownMenuItem>
@@ -155,7 +155,7 @@ export function Layout({ children }: LayoutProps) {
 
               <Button
                 onClick={() => setAuthDialogOpen(true)}
-                className="w-full gap-2"
+                className="w-full gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all"
                 size="lg"
               >
                 <User className="h-5 w-5" />

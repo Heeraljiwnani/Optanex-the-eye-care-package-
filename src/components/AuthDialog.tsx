@@ -19,22 +19,22 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  
+
   // Form states
   const [signInForm, setSignInForm] = useState({ email: '', password: '' });
-  const [signUpForm, setSignUpForm] = useState({ 
-    email: '', 
-    password: '', 
-    confirmPassword: '', 
-    fullName: '' 
+  const [signUpForm, setSignUpForm] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    fullName: ''
   });
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     const { error } = await signIn(signInForm.email, signInForm.password);
-    
+
     if (error) {
       toast({
         title: "Sign in failed",
@@ -48,13 +48,13 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
       });
       onOpenChange(false);
     }
-    
+
     setIsLoading(false);
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (signUpForm.password !== signUpForm.confirmPassword) {
       toast({
         title: "Password mismatch",
@@ -63,15 +63,15 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
       });
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     const { error } = await signUp(
-      signUpForm.email, 
-      signUpForm.password, 
+      signUpForm.email,
+      signUpForm.password,
       signUpForm.fullName
     );
-    
+
     if (error) {
       toast({
         title: "Sign up failed",
@@ -85,7 +85,7 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
       });
       onOpenChange(false);
     }
-    
+
     setIsLoading(false);
   };
 
@@ -95,8 +95,8 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
         <DialogHeader>
           <DialogTitle className="text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Eye className="h-5 w-5 text-primary-foreground" />
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+                 <img src="/fav2-removebg-preview.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
               </div>
               OptaNex
             </div>
@@ -105,13 +105,13 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
             </p>
           </DialogTitle>
         </DialogHeader>
-        
+
         <Tabs defaultValue="signin" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">Sign In</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="signin" className="space-y-4">
             <form onSubmit={handleSignIn} className="space-y-4">
               <div className="space-y-2">
@@ -145,16 +145,16 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
                   </button>
                 </div>
               </div>
-              <Button 
-                type="submit" 
-                className="w-full" 
+              <Button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all"
                 disabled={isLoading}
               >
                 {isLoading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
           </TabsContent>
-          
+
           <TabsContent value="signup" className="space-y-4">
             <form onSubmit={handleSignUp} className="space-y-4">
               <div className="space-y-2">
@@ -210,9 +210,9 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
                   required
                 />
               </div>
-              <Button 
-                type="submit" 
-                className="w-full" 
+              <Button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating account..." : "Create Account"}

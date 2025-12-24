@@ -20,11 +20,13 @@ import {
   Zap,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useSpeech } from "@/hooks/useSpeech";
 import IshiharaPlate from "@/components/IshiharaPlate";
 
 
 export default function Optiscreen() {
   const { t, i18n } = useTranslation();
+  const { speak } = useSpeech();
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const screeningTests = [
@@ -224,9 +226,7 @@ export default function Optiscreen() {
                   }
                   // @ts-ignore
                   const text = t(test.verbalAlertKey);
-                  const utterance = new SpeechSynthesisUtterance(text);
-                  utterance.lang = i18n.language === 'hi' ? 'hi-IN' : 'en-US';
-                  window.speechSynthesis.speak(utterance);
+                  speak(text, i18n.language === 'hi' ? 'hi' : 'en');
                 }}
               >
                 <CardHeader className="pb-4">
