@@ -63,9 +63,9 @@ export function ImageUploadDialog({
 
         let apiUrl = "";
         if (testType === "diabetic-retinopathy") {
-          apiUrl = "http://127.0.0.1:8000/predict";
+          apiUrl = "https://dr-model.onrender.com/predict";
         } else if (testType === "macular-degeneration") {
-          apiUrl = "http://127.0.0.1:5001/api/predict";
+          apiUrl = "https://amd-detection.onrender.com/predict";
         }
 
         if (apiUrl) {
@@ -76,7 +76,29 @@ export function ImageUploadDialog({
           if (!apiResponse.ok)
             throw new Error(`API call failed: ${apiResponse.statusText}`);
 
-          analysisResult = await apiResponse.json();
+          const rawResult = await apiResponse.json();
+
+          if (testType === "macular-degeneration" || testType === "diabetic-retinopathy") {
+            const resultKey = testType === "diabetic-retinopathy" ? "Dettected" : "Detected";
+
+            // Internal normalization for database/logic
+            let normalizedConf = 0;
+            if (typeof rawResult.Chance === 'string') {
+              normalizedConf = parseFloat(rawResult.Chance.replace('%', '')) / 100;
+            } else if (typeof rawResult.Chance === 'number') {
+              normalizedConf = rawResult.Chance > 1 ? rawResult.Chance / 100 : rawResult.Chance;
+            }
+
+            analysisResult = {
+              ...rawResult,
+              class_name: rawResult[resultKey] || rawResult.Detected || rawResult.class_name,
+              confidence: normalizedConf || rawResult.confidence || 0,
+              class_id: rawResult.class_id || 0
+            };
+          } else {
+            analysisResult = rawResult;
+          }
+
           setApiResponse(analysisResult);
         }
       } catch (apiError) {
@@ -183,7 +205,7 @@ export function ImageUploadDialog({
           {/* Instructions */}
           <Card className="bg-primary/5 border-primary/20">
             <CardContent className="p-4">
-              <h4 className="font-semibold text-primary mb-2">
+              <h4 className="font-semibold text-black dark:text-primary mb-2">
                 Upload Instructions
               </h4>
               <ul className="text-sm space-y-1 text-muted-foreground">
@@ -244,7 +266,7 @@ export function ImageUploadDialog({
                       <Button
                         onClick={handleUpload}
                         disabled={isUploading}
-                        className="min-w-32"
+                        className="min-w-32 bg-blue-600 hover:bg-blue-700 text-white"
                       >
                         {isUploading ? (
                           <>
@@ -300,17 +322,24 @@ export function ImageUploadDialog({
                     <div className="space-y-4">
                       <div className="flex items-center justify-between p-4 bg-background rounded-lg border">
                         <div>
-                          <h5 className="font-medium text-lg">Classification</h5>
-                          <p className="text-2xl font-bold text-primary">
-                            {apiResponse.class_name}
+                          <h5 className="font-medium text-lg">
+                            {testType === "diabetic-retinopathy" ? "Dettected" : "Classification"}
+                          </h5>
+                          <p className="text-2xl font-bold text-black dark:text-primary">
+                            {testType === "diabetic-retinopathy" ? (apiResponse.Dettected || apiResponse.class_name) : apiResponse.class_name}
                           </p>
                         </div>
                         <div className="text-right">
                           <h5 className="font-medium text-sm text-muted-foreground">
-                            Confidence Level
+                            {testType === "diabetic-retinopathy" ? "Chance" : "Confidence Level"}
                           </h5>
                           <p className="text-xl font-semibold">
-                            {(apiResponse.confidence * 100).toFixed(1)}%
+                            {testType === "diabetic-retinopathy"
+                              ? (typeof apiResponse.Chance === 'number' && apiResponse.Chance <= 1
+                                ? `${(apiResponse.Chance * 100).toFixed(1)}%`
+                                : (String(apiResponse.Chance).includes('%') ? apiResponse.Chance : `${apiResponse.Chance}%`))
+                              : `${(apiResponse.confidence * 100).toFixed(1)}%`
+                            }
                           </p>
                         </div>
                       </div>
@@ -322,10 +351,10 @@ export function ImageUploadDialog({
                         <div className="grid grid-cols-2 gap-4 text-sm">
                           <div>
                             <span className="text-muted-foreground">
-                              Severity Level:
+                              {testType === "diabetic-retinopathy" ? "Dettected Status:" : "Severity Level:"}
                             </span>
                             <span className="ml-2 font-medium">
-                              {apiResponse.class_name}
+                              {testType === "diabetic-retinopathy" ? apiResponse.Dettected : apiResponse.class_name}
                             </span>
                           </div>
                           <div>
