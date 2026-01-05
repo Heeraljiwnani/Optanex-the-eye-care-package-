@@ -37,7 +37,7 @@ export default function About() {
                 variants={itemVariants}
             >
                 <div className="w-16 h-16 mx-auto  rounded-2xl flex items-center justify-center">
-                    <img src="/fav2-removebg-preview.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
+                    <img src="/optanex-logo.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
                 </div>
                 <div>
                     <h1 className="text-4xl font-bold text-foreground flex justify-center items-center gap-2">
