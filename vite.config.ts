@@ -24,7 +24,7 @@ export default defineConfig({
       devOptions: {
         enabled: false, // 👈 THIS IS CRITICAL
       },
-      includeAssets: ["favicon.svg", "robots.txt"],
+      includeAssets: ["robots.txt"],
       manifest: {
         name: "Optanex",
         short_name: "Optanex",
@@ -34,13 +34,18 @@ export default defineConfig({
         theme_color: "#000000",
         icons: [
           {
-            src: "/pwa-192x192.png",
+            src: "/android-chrome-192x192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/pwa-512x512.png",
+            src: "/android-chrome-512x512.png",
             sizes: "512x512",
+            type: "image/png",
+          },
+          {
+            src: "/apple-touch-icon.png",
+            sizes: "180x180",
             type: "image/png",
           },
         ],

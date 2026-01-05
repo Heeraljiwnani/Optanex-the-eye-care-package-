@@ -8,7 +8,7 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <div className="flex items-center gap-3">
-            <img src="/fav2-removebg-preview.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
+            <img src="/optanex-logo.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
             <h3 className="text-xl font-bold text-foreground">
               OptaNex
             </h3>

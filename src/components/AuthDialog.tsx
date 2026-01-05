@@ -96,7 +96,7 @@ export function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
           <DialogTitle className="text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center">
-                 <img src="/fav2-removebg-preview.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
+                <img src="/optanex-logo.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
               </div>
               OptaNex
             </div>
