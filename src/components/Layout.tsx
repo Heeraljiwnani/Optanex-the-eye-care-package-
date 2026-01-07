@@ -17,12 +17,14 @@ import { AuthDialog } from "@/components/AuthDialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import Footer from "@/components/Footer";
+import { useTranslation } from "react-i18next";
+import { Languages } from "lucide-react";
+import { ChatbotButton } from "@/components/ChatbotButton";
+
 interface LayoutProps {
   children: React.ReactNode;
 }
-import { useTranslation } from "react-i18next";
-import i18n from "i18next";
-import { Languages } from "lucide-react";
+
 export function Layout({ children }: LayoutProps) {
   const { t, i18n } = useTranslation();
   const { user, loading, signOut } = useAuth();
@@ -46,7 +48,7 @@ export function Layout({ children }: LayoutProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="min-h-screen flex w-full bg-background"
+          className="min-h-screen flex w-full bg-background relative"
         >
           <SidebarProvider>
             <AppSidebar />
@@ -124,6 +126,7 @@ export function Layout({ children }: LayoutProps) {
 
             </div>
           </SidebarProvider>
+          <ChatbotButton />
         </motion.div>
       ) : (
         <motion.div
