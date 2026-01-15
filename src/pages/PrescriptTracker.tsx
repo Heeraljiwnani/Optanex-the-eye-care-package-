@@ -51,13 +51,26 @@ export default function PrescriptTracker() {
     notes: ""
   });
 
-  // Fetch prescriptions from database
+  const [managementConsent, setManagementConsent] = useState<boolean | null>(null);
+
   useEffect(() => {
     if (user) {
       fetchPrescriptions();
       setupRealtimeSubscription();
+      fetchConsent();
     }
   }, [user]);
+
+  const fetchConsent = async () => {
+    const { data } = await supabase
+      .from("profiles")
+      .select("management_consent")
+      .eq("user_id", user?.id)
+      .single();
+    if (data) {
+      setManagementConsent(data.management_consent);
+    }
+  };
 
   const fetchPrescriptions = async () => {
     try {
@@ -106,6 +119,15 @@ export default function PrescriptTracker() {
 
   const handleUpload = async () => {
     if (!selectedFile || !formData.doctorName || !selectedDate) return;
+
+    if (!managementConsent) {
+      toast({
+        title: "Consent required",
+        description: "You need to enable 'Data Management' in Settings to save your history.",
+        variant: "destructive"
+      });
+      return;
+    }
 
     try {
       // Upload file to Supabase storage

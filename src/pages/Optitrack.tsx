@@ -55,10 +55,25 @@ export default function Optitrack() {
 
   const { toast } = useToast();
   const { user } = useAuth();
+  const [managementConsent, setManagementConsent] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (user) fetchPowerHistory();
+    if (user) {
+      fetchPowerHistory();
+      fetchConsent();
+    }
   }, [user]);
+
+  const fetchConsent = async () => {
+    const { data } = await supabase
+      .from("profiles")
+      .select("management_consent")
+      .eq("user_id", user?.id)
+      .single();
+    if (data) {
+      setManagementConsent(data.management_consent);
+    }
+  };
 
   const fetchPowerHistory = async () => {
     try {
@@ -83,6 +98,15 @@ export default function Optitrack() {
 
   const handleAddEntry = async () => {
     if (!user || !selectedDate) return;
+
+    if (!managementConsent) {
+      toast({
+        title: "Consent required",
+        description: "You need to enable 'Data Management' in Settings to save your history.",
+        variant: "destructive"
+      });
+      return;
+    }
 
     try {
       const { error } = await supabase

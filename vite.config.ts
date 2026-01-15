@@ -3,13 +3,24 @@ import react from "@vitejs/plugin-react-swc";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "path";
 import fs from "node:fs";
+const isDev = process.env.NODE_ENV === 'development';
+const hasCert = fs.existsSync(path.resolve(__dirname, "localhost-key.pem")) &&
+  fs.existsSync(path.resolve(__dirname, "localhost.pem"));
+
 export default defineConfig({
   server: {
     host: "localhost",
     port: 5173,
-    https: {
+    https: isDev && hasCert ? {
       key: fs.readFileSync(path.resolve(__dirname, "localhost-key.pem")),
       cert: fs.readFileSync(path.resolve(__dirname, "localhost.pem")),
+    } : undefined,
+    proxy: {
+      "/api/chatbot": {
+        target: "https://iris-chatbot-ro1e.onrender.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/chatbot/, ""),
+      },
     },
   },
   resolve: {
