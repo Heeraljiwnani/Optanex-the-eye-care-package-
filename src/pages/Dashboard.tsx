@@ -172,30 +172,30 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative overflow-hidden rounded-2xl bg-gradient-hero p-2 text-white"
+        className="relative overflow-hidden rounded-2xl bg-gradient-hero p-1 sm:p-2 text-white"
       >
         <div
-          className="relative z-10 max-w-6xl rounded-2xl p-8 shadow-lg"
+          className="relative z-10 max-w-6xl rounded-2xl p-4 sm:p-8 shadow-lg"
           style={{ background: "var(--gradient-hero-box)" }}
         >
-          <h1 className="text-4xl font-bold mb-4">{t("welcome")}</h1>
-          <p className="text-lg mb-6 opacity-90">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-3 sm:mb-4">{t("welcome")}</h1>
+          <p className="text-sm sm:text-lg mb-4 sm:mb-6 opacity-90">
             {t("heroDescription")}
           </p>
 
-          <div className="flex gap-4">
-            <Button size="lg" variant="secondary" asChild>
+          <div className="flex flex-wrap gap-4">
+            <Button size="lg" variant="secondary" asChild className="sm:w-auto">
               <Link to="/optiscreen">
                 {t("startbutton")} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="glass" asChild>
+            <Button size="lg" variant="glass" asChild className="sm:w-auto">
               <Link to="/optitrack">
                 {t("manageCare")} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -204,8 +204,8 @@ export default function Dashboard() {
         </div>
 
         {/* Decorative blobs remain outside the box */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 bg-white/10 rounded-full blur-2xl sm:blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-48 sm:h-48 bg-white/5 rounded-full blur-xl sm:blur-2xl"></div>
       </motion.div>
 
 

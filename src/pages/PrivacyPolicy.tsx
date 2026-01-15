@@ -5,21 +5,21 @@ import { Shield, Lock, Eye, Database, UserCheck, FileText, AlertTriangle, Mail }
 
 export default function PrivacyPolicy() {
   return (
-    <div className="p-6 space-y-8 max-w-4xl mx-auto">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8 max-w-4xl mx-auto">
       {/* Header */}
       <div className="text-center space-y-4">
         <div className="w-16 h-16 mx-auto bg-gradient-primary rounded-2xl flex items-center justify-center">
           <Shield className="h-8 w-8 text-primary-foreground" />
         </div>
         <div>
-          <h1 className="text-4xl font-bold text-foreground">Privacy Policy</h1>
-          <p className="text-lg text-muted-foreground">OptaNex - Complete Eye Care Companion</p>
-          <p className="text-sm text-muted-foreground">Last Updated: January 2025</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground">Privacy Policy</h1>
+          <p className="text-base sm:text-lg text-muted-foreground">OptaNex - Complete Eye Care Companion</p>
+          <p className="text-xs sm:text-sm text-muted-foreground">Last Updated: January 2025</p>
         </div>
         <div className="mt-6">
-          <a 
-            href="/Privacy_Policy_for_Optanex.pdf" 
-            target="_blank" 
+          <a
+            href="/Privacy_Policy_for_Optanex.pdf"
+            target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
           >
@@ -39,10 +39,10 @@ export default function PrivacyPolicy() {
             <div>
               <h2 className="text-xl font-semibold text-foreground mb-3">Introduction</h2>
               <p className="text-muted-foreground leading-relaxed">
-                OptaNex ("we," "our," or "us") is committed to protecting your privacy and ensuring the security 
-                of your personal and medical information. This Privacy Policy explains how we collect, use, 
-                disclose, and safeguard your information when you use our eye care application and services, 
-                in compliance with the Digital Personal Data Protection Act (DPDP Act) 2023 and international 
+                OptaNex ("we," "our," or "us") is committed to protecting your privacy and ensuring the security
+                of your personal and medical information. This Privacy Policy explains how we collect, use,
+                disclose, and safeguard your information when you use our eye care application and services,
+                in compliance with the Digital Personal Data Protection Act (DPDP Act) 2023 and international
                 privacy standards.
               </p>
             </div>
@@ -68,7 +68,7 @@ export default function PrivacyPolicy() {
                 <li>• Profile information and preferences</li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="font-semibold text-foreground mb-2">Medical Information</h3>
               <ul className="space-y-1 text-muted-foreground ml-4">
@@ -256,8 +256,8 @@ export default function PrivacyPolicy() {
             </div>
             <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
               <p className="text-sm text-muted-foreground">
-                <strong>Grievance Redressal:</strong> We are committed to resolving any privacy-related concerns 
-                within 72 hours of receiving your complaint. You may also file a complaint with the Data Protection 
+                <strong>Grievance Redressal:</strong> We are committed to resolving any privacy-related concerns
+                within 72 hours of receiving your complaint. You may also file a complaint with the Data Protection
                 Board of India if you believe your rights have been violated.
               </p>
             </div>
@@ -271,8 +271,8 @@ export default function PrivacyPolicy() {
           <div className="text-center space-y-2">
             <h3 className="font-semibold text-foreground">Policy Updates</h3>
             <p className="text-sm text-muted-foreground">
-              We may update this Privacy Policy from time to time. We will notify you of any material changes 
-              by posting the new Privacy Policy on this page and updating the "Last Updated" date. 
+              We may update this Privacy Policy from time to time. We will notify you of any material changes
+              by posting the new Privacy Policy on this page and updating the "Last Updated" date.
               Continued use of our services after such changes constitutes acceptance of the updated policy.
             </p>
           </div>

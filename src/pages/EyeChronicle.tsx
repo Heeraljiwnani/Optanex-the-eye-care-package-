@@ -212,21 +212,21 @@ export default function EyeChronicle() {
   };
 
   return (
-    <div className="space-y-8 p-6">
+    <div className="space-y-6 sm:space-y-8 p-4 sm:p-6">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
       >
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight text-gradient-head flex items-center gap-2">
-            <Link to="/">{t("dashboard")}</Link>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient-head flex items-center gap-2 flex-wrap">
+            <Link to="/" className="hover:text-primary transition-colors">{t("dashboard")}</Link>
             <span className="text-muted-foreground">›</span>
             {t("eyechronicle_title")}
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="ghost" size="icon" className="ml-2 rounded-full hover:bg-primary/10">
-                  <HelpCircle className="h-6 w-6 text-dashboard" />
+                <Button variant="ghost" size="icon" className="ml-0 sm:ml-2 rounded-full hover:bg-primary/10">
+                  <HelpCircle className="h-6 w-6 sm:h-7 sm:w-7 text-dashboard" />
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-card border-0">
@@ -243,10 +243,10 @@ export default function EyeChronicle() {
             {t("eyechronicle_subtitle")}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex w-full sm:w-auto gap-2">
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button className="gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all">
+              <Button className="w-full sm:w-auto gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all">
                 <Plus className="h-5 w-5" />
                 {t("add_record")}
               </Button>

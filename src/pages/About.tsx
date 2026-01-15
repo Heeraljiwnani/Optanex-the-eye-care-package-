@@ -26,7 +26,7 @@ export default function About() {
 
     return (
         <motion.div
-            className="p-6 space-y-8 max-w-4xl mx-auto"
+            className="p-4 sm:p-6 space-y-6 sm:space-y-8 max-w-4xl mx-auto"
             variants={containerVariants}
             initial="hidden"
             animate="show"
@@ -40,12 +40,12 @@ export default function About() {
                     <img src="/optanex-logo.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
                 </div>
                 <div>
-                    <h1 className="text-4xl font-bold text-foreground flex justify-center items-center gap-2">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-foreground flex justify-center items-center gap-2 flex-wrap">
                         {t("about_title")}
                         <Dialog>
                             <DialogTrigger asChild>
-                                <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10">
-                                    <HelpCircle className="h-7 w-7 text-dashboard" />
+                                <Button variant="ghost" size="icon" className="ml-0 sm:ml-2 rounded-full hover:bg-primary/10">
+                                    <HelpCircle className="h-6 w-6 sm:h-7 sm:w-7 text-dashboard" />
                                 </Button>
                             </DialogTrigger>
                             <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-card border-0 text-left">
@@ -58,7 +58,7 @@ export default function About() {
                             </DialogContent>
                         </Dialog>
                     </h1>
-                    <p className="text-lg text-muted-foreground">{t("about_subtitle")}</p>
+                    <p className="text-base sm:text-lg text-muted-foreground">{t("about_subtitle")}</p>
                 </div>
             </motion.div>
 
