@@ -31,19 +31,19 @@ export default function FAQ() {
     };
 
     return (
-        <div className="min-h-screen bg-background p-6 space-y-8">
+        <div className="min-h-screen bg-background p-4 sm:p-6 space-y-6 sm:space-y-8">
             {/* Header Section */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="max-w-4xl mx-auto text-center space-y-4"
             >
-                <h1 className="text-4xl font-bold text-gradient-head flex justify-center items-center gap-2">
+                <h1 className="text-3xl sm:text-4xl font-bold text-gradient-head flex justify-center items-center gap-2 flex-wrap">
                     {t("faq_title")}
                     <Dialog>
                         <DialogTrigger asChild>
-                            <Button variant="ghost" size="icon" className="ml-2 rounded-full hover:bg-primary/10">
-                                <HelpCircle className="h-7 w-7 text-dashboard" />
+                            <Button variant="ghost" size="icon" className="ml-0 sm:ml-2 rounded-full hover:bg-primary/10">
+                                <HelpCircle className="h-6 w-6 sm:h-7 sm:w-7 text-dashboard" />
                             </Button>
                         </DialogTrigger>
                         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-card border-0">
@@ -56,7 +56,7 @@ export default function FAQ() {
                         </DialogContent>
                     </Dialog>
                 </h1>
-                <p className="text-lg text-muted-foreground w-full">
+                <p className="text-base sm:text-lg text-muted-foreground w-full">
                     {t("faq_subtitle")}
                 </p>
             </motion.div>

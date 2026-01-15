@@ -104,7 +104,7 @@ export default function GlareGuard() {
   };
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -112,14 +112,14 @@ export default function GlareGuard() {
         className="space-y-4"
       >
         <div className="text-left space-y-1">
-          <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
-            <Link to="/">{t("dashboard")}</Link>
+          <h1 className="text-2xl sm:text-4xl font-bold text-foreground flex items-center gap-2 flex-wrap">
+            <Link to="/" className="hover:text-primary transition-colors">{t("dashboard")}</Link>
             <span className="text-muted-foreground">›</span>
             <span className="text-gradient-head">{t("glareguard")}</span>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="ghost" size="icon" className="ml-2 rounded-full hover:bg-primary/10">
-                  <HelpCircle className="h-7 w-7 text-dashboard" />
+                <Button variant="ghost" size="icon" className="ml-0 sm:ml-2 rounded-full hover:bg-primary/10">
+                  <HelpCircle className="h-6 w-6 sm:h-7 sm:w-7 text-dashboard" />
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-card border-0">

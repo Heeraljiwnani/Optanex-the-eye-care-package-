@@ -147,7 +147,7 @@ export default function Optiscreen() {
   };
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* Header */}
 
       <motion.div
@@ -156,8 +156,8 @@ export default function Optiscreen() {
         transition={{ duration: 0.5 }}
         className="text-left space-y-1"
       >
-        <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
-          <Link to="/" >
+        <h1 className="text-2xl sm:text-4xl font-bold text-foreground flex items-center gap-2 flex-wrap">
+          <Link to="/" className="hover:text-primary transition-colors">
             {t("dashboard")}
           </Link>
 
@@ -168,8 +168,8 @@ export default function Optiscreen() {
           </span>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="ghost" size="icon" className="ml-2 rounded-full hover:bg-primary/10">
-                <HelpCircle className="h-7 w-7 text-dashboard" />
+              <Button variant="ghost" size="icon" className="ml-0 sm:ml-2 rounded-full hover:bg-primary/10">
+                <HelpCircle className="h-6 w-6 sm:h-7 sm:w-7 text-dashboard" />
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-card border-0">
@@ -294,18 +294,18 @@ export default function Optiscreen() {
           </Button>
 
           <Card className="bg-gradient-card border-0 shadow-custom-lg">
-            <CardHeader>
-              <div className="flex items-center gap-4">
-                <div className={`w-16 h-16 ${selectedTestData.color} rounded-xl flex items-center justify-center`}>
-                  <selectedTestData.icon className="h-8 w-8 text-white" />
+            <CardHeader className="p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 ${selectedTestData.color} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                  <selectedTestData.icon className="h-7 w-7 sm:h-8 sm:w-8 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-2xl flex items-center gap-2">
+                  <CardTitle className="text-xl sm:text-2xl flex items-center gap-2">
                     {selectedTestData.title}
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10">
-                          <HelpCircle className="h-6 w-6 text-dashboard" />
+                          <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6 text-dashboard" />
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-card border-0">
@@ -374,11 +374,11 @@ export default function Optiscreen() {
                 </div>
               </div>
 
-              <div className="flex gap-4 pt-4 border-t">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 border-t">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="flex-1"
+                  className="w-full sm:flex-1"
                   onClick={() => handleStartTest(selectedTestData.id)}
                 >
                   {t("startTestNow")}
@@ -387,6 +387,7 @@ export default function Optiscreen() {
                 <Button
                   variant="secondary"
                   size="lg"
+                  className="w-full sm:w-auto"
                   onClick={() => setShowSymptoms(null)}
                 >
                   {t("chooseDifferentTest")}

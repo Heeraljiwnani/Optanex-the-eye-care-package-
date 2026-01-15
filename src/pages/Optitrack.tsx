@@ -183,16 +183,16 @@ export default function Optitrack() {
         animate={{ opacity: 1, y: 0 }}
         className="space-y-4"
       >
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="text-left space-y-1">
-            <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
-              <Link to="/">{t("dashboard")}</Link>
+            <h1 className="text-2xl sm:text-4xl font-bold text-foreground flex items-center gap-2 flex-wrap">
+              <Link to="/" className="hover:text-primary transition-colors">{t("dashboard")}</Link>
               <span className="text-muted-foreground">›</span>
               <span className="text-gradient-head">{t("optitrack")}</span>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" size="icon" className="ml-2 rounded-full hover:bg-primary/10">
-                    <HelpCircle className="h-7 w-7 text-dashboard" />
+                  <Button variant="ghost" size="icon" className="ml-0 sm:ml-2 rounded-full hover:bg-primary/10">
+                    <HelpCircle className="h-6 w-6 sm:h-7 sm:w-7 text-dashboard" />
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-card border-0">
@@ -208,7 +208,7 @@ export default function Optitrack() {
             <p className="text-lg text-muted-foreground max-w-2xl">{t("trackDescription")}</p>
           </div>
 
-          <Button onClick={() => setShowAddForm(true)} className="gap-2" variant="secondary">
+          <Button onClick={() => setShowAddForm(true)} className="gap-2 w-full sm:w-auto" variant="secondary">
             <Plus className="h-5 w-5" />
             {t("addReading")}
           </Button>

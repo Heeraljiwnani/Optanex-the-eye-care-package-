@@ -62,20 +62,20 @@ export function Layout({ children }: LayoutProps) {
                       <Menu className="h-5 w-5" />
                     </SidebarTrigger>
 
-                    <div className="flex items-center gap-3">
-                      <img src="/optanex-logo.png" alt="OptaNex Logo" className="w-10 h-8 rounded-lg" />
-                      <div>
-                        <h1 className="text-lg font-semibold text-foreground">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <img src="/optanex-logo.png" alt="OptaNex Logo" className="w-8 h-6 sm:w-10 sm:h-8 rounded-lg" />
+                      <div className="hidden xs:block">
+                        <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">
                           OptaNex
                         </h1>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-[10px] sm:text-xs text-muted-foreground">
                           Complete Eye Care
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 sm:gap-2">
                     <ThemeToggle />
                     <Button
                       variant="outline"
@@ -83,17 +83,17 @@ export function Layout({ children }: LayoutProps) {
                       onClick={() =>
                         i18n.changeLanguage(i18n.language === "en" ? "hi" : "en")
                       }
-                      className="flex items-center gap-2 text-white dark:text-white"
+                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 text-white dark:text-white"
                     >
-                      <Languages className="h-4 w-4 text-white" />
-                      {i18n.language === "en" ? "हिंदी" : "EN"}
+                      <Languages className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
+                      <span className="text-xs sm:text-sm">{i18n.language === "en" ? "हिंदी" : "EN"}</span>
                     </Button>
 
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground border border-gray-500/50 rounded-full px-4 py-1.5 bg-black/5 dark:bg-white/5 cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
-                          <User className="h-4 w-4" />
-                          <span className="max-w-[150px] truncate hidden sm:inline-block">{user.email}</span>
+                        <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground border border-gray-500/50 rounded-full px-2 sm:px-4 py-1 sm:py-1.5 bg-black/5 dark:bg-white/5 cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                          <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                          <span className="max-w-[100px] sm:max-w-[150px] truncate hidden xs:inline-block">{user.email}</span>
                           <ChevronDown className="h-3 w-3 opacity-50" />
                         </div>
                       </DropdownMenuTrigger>
@@ -137,21 +137,21 @@ export function Layout({ children }: LayoutProps) {
           transition={{ duration: 0.3 }}
           className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10"
         >
-          <div className="text-center space-y-8 max-w-md mx-auto p-8">
-            <div className="space-y-4">
+          <div className="text-center space-y-6 sm:space-y-8 max-w-md mx-auto p-4 sm:p-8">
+            <div className="space-y-3 sm:space-y-4">
               <img src="/optanex-logo.png" alt="OptaNex Logo" className="w-8 h-8 mx-auto rounded-lg" />
               <div>
-                <h1 className="text-4xl font-bold text-foreground mb-2">
+                <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
                   OptaNex
                 </h1>
-                <p className="text-lg text-muted-foreground">
+                <p className="text-base sm:text-lg text-muted-foreground">
                   Complete Eye Care Companion
                 </p>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <p className="text-muted-foreground">
+            <div className="space-y-3 sm:space-y-4">
+              <p className="text-sm sm:text-base text-muted-foreground">
                 Track your eye health, monitor screen time, and protect your
                 vision with our comprehensive suite of tools.
               </p>
