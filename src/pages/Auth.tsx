@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 
 import { Eye, EyeOff } from "lucide-react";
 import { BlinkingLoader } from "@/components/ui/BlinkingLoader";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Auth() {
   const { user, signIn, signUp, loading } = useAuth();
@@ -25,7 +26,9 @@ export default function Auth() {
     email: '',
     password: '',
     confirmPassword: '',
-    fullName: ''
+    fullName: '',
+    trainingConsent: false,
+    managementConsent: false
   });
 
   // Redirect if already authenticated
@@ -72,7 +75,9 @@ export default function Auth() {
     const { error } = await signUp(
       signUpForm.email,
       signUpForm.password,
-      signUpForm.fullName
+      signUpForm.fullName,
+      signUpForm.trainingConsent,
+      signUpForm.managementConsent
     );
 
     if (error) {
@@ -216,6 +221,51 @@ export default function Auth() {
                       required
                     />
                   </div>
+
+                  <div className="space-y-4 pt-2">
+                    <div className="flex items-start space-x-2">
+                      <Checkbox
+                        id="training-consent"
+                        checked={signUpForm.trainingConsent}
+                        onCheckedChange={(checked) =>
+                          setSignUpForm(prev => ({ ...prev, trainingConsent: checked as boolean }))
+                        }
+                      />
+                      <div className="grid gap-1.5 leading-none">
+                        <Label
+                          htmlFor="training-consent"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Consent for AI training
+                        </Label>
+                        <p className="text-xs text-muted-foreground">
+                          Allow your uploaded retinal images to be used for future AI model training. This helps us improve our diagnostic accuracy.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-2">
+                      <Checkbox
+                        id="management-consent"
+                        checked={signUpForm.managementConsent}
+                        onCheckedChange={(checked) =>
+                          setSignUpForm(prev => ({ ...prev, managementConsent: checked as boolean }))
+                        }
+                      />
+                      <div className="grid gap-1.5 leading-none">
+                        <Label
+                          htmlFor="management-consent"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Consent for data management
+                        </Label>
+                        <p className="text-xs text-muted-foreground">
+                          Allow OptaNex to securely store your eye health records, tracking data, and screening results.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
                   <Button
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all"

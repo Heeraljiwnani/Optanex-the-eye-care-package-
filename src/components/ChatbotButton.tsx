@@ -35,8 +35,11 @@ export const ChatbotButton = () => {
         setMessages(prev => [...prev, { role: "user", content: userMessage }]);
         setIsLoading(true);
 
+        // Deployment Ready: Use local proxy in dev, direct URL in prod
+        const apiUrl = import.meta.env.DEV ? "/api/chatbot/chat" : "https://iris-chatbot-ro1e.onrender.com/chat";
+
         try {
-            const response = await fetch("https://iris-chatbot-ro1e.onrender.com/chat", {
+            const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

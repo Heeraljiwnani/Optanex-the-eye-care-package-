@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
@@ -25,8 +25,27 @@ export function ImageUploadDialog({
   const [isUploading, setIsUploading] = useState(false);
   const [uploadComplete, setUploadComplete] = useState(false);
   const [apiResponse, setApiResponse] = useState<any>(null);
+  const [consent, setConsent] = useState<{ training: boolean, management: boolean } | null>(null);
   const { user } = useAuth();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchConsent = async () => {
+      if (!user) return;
+      const { data } = await supabase
+        .from("profiles")
+        .select("training_consent, management_consent")
+        .eq("user_id", user.id)
+        .single();
+      if (data) {
+        setConsent({
+          training: data.training_consent,
+          management: data.management_consent
+        });
+      }
+    };
+    if (isOpen) fetchConsent();
+  }, [user, isOpen]);
 
   const handleFileSelect = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +69,16 @@ export function ImageUploadDialog({
 
   const handleUpload = async () => {
     if (!selectedFile || !user) return;
+
+    // Check if management consent is given
+    if (!consent?.management) {
+      toast({
+        title: "Consent required",
+        description: "You need to enable 'Data Management' in Settings to save your results.",
+        variant: "destructive",
+      });
+      // We still proceed with analysis for the user's immediate view, but won't save
+    }
 
     setIsUploading(true);
     try {
@@ -115,58 +144,69 @@ export function ImageUploadDialog({
         setApiResponse(analysisResult);
       }
 
-      // Upload image to Supabase storage
-      const fileExt = selectedFile.name.split(".").pop();
-      const fileName = `${user.id}/${testType}/${Date.now()}.${fileExt}`;
+      // ONLY SAVE TO DB AND STORAGE IF MANAGEMENT CONSENT IS GIVEN
+      if (consent?.management) {
+        let publicUrl = null;
 
-      const { error: uploadError } = await supabase.storage
-        .from("retinal-images")
-        .upload(fileName, selectedFile);
+        // ONLY UPLOAD IMAGE IF TRAINING CONSENT IS GIVEN (as per user request "only we save the uploaded retinal images" if permission given)
+        if (consent?.training) {
+          const fileExt = selectedFile.name.split(".").pop();
+          const fileName = `${user.id}/${testType}/${Date.now()}.${fileExt}`;
 
-      if (uploadError) throw uploadError;
+          const { error: uploadError } = await supabase.storage
+            .from("retinal-images")
+            .upload(fileName, selectedFile);
 
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from("retinal-images").getPublicUrl(fileName);
+          if (uploadError) throw uploadError;
 
-      const getRiskLevel = (className: string) => {
-        switch (className?.toLowerCase()) {
-          case "no dr":
-            return "low";
-          case "mild":
-            return "low";
-          case "moderate":
-            return "moderate";
-          case "severe":
-            return "high";
-          case "proliferative dr":
-            return "high";
-          default:
-            return "low";
+          const {
+            data: { publicUrl: url },
+          } = supabase.storage.from("retinal-images").getPublicUrl(fileName);
+          publicUrl = url;
         }
-      };
 
-      const dbTestType = testType.replace(/-/g, "_");
+        const getRiskLevel = (className: string) => {
+          switch (className?.toLowerCase()) {
+            case "no dr":
+            case "no amd":
+              return "low";
+            case "mild":
+              return "low";
+            case "moderate":
+              return "moderate";
+            case "severe":
+            case "high":
+            case "proliferative dr":
+              return "high";
+            default:
+              return "low";
+          }
+        };
 
-      const { error: dbError } = await supabase
-        .from("screening_results")
-        .insert({
-          user_id: user.id,
-          test_type: dbTestType,
-          image_url: publicUrl,
-          result: analysisResult || { status: "uploaded", analysis_pending: true },
-          risk_level: analysisResult
-            ? getRiskLevel(analysisResult.class_name)
-            : "low",
-          recommendations: analysisResult?.recommendations || null,
-        });
+        const dbTestType = testType.replace(/-/g, "_");
 
-      if (dbError) throw dbError;
+        const { error: dbError } = await supabase
+          .from("screening_results")
+          .insert({
+            user_id: user.id,
+            test_type: dbTestType,
+            image_url: publicUrl, // Might be null if no training consent
+            result: analysisResult || { status: "analyzed", analysis_pending: false },
+            risk_level: analysisResult
+              ? getRiskLevel(analysisResult.class_name)
+              : "low",
+            recommendations: analysisResult?.recommendations || null,
+          });
+
+        if (dbError) throw dbError;
+      }
 
       setUploadComplete(true);
       toast({
         title: "Analysis complete",
-        description: "Your retinal image has been analyzed successfully.",
+        description: consent?.management
+          ? "Your retinal image has been analyzed and results saved."
+          : "Your retinal image has been analyzed (not saved due to privacy settings).",
       });
     } catch (error) {
       console.error("Upload error:", error);

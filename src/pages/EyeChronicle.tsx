@@ -47,12 +47,25 @@ export default function EyeChronicle() {
 
   const { toast } = useToast();
   const { user } = useAuth();
+  const [managementConsent, setManagementConsent] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (user) {
       fetchMedicalHistory();
+      fetchConsent();
     }
   }, [user]);
+
+  const fetchConsent = async () => {
+    const { data } = await supabase
+      .from("profiles")
+      .select("management_consent")
+      .eq("user_id", user?.id)
+      .single();
+    if (data) {
+      setManagementConsent(data.management_consent);
+    }
+  };
 
   const fetchMedicalHistory = async () => {
     try {
@@ -60,21 +73,6 @@ export default function EyeChronicle() {
         .from('medical_history') // Assuming this is the table name, check if it stores 'title', 'record_type' etc or map them
         .select('*')
         .order('diagnosis_date', { ascending: false });
-
-      // Note: If the DB schema uses different column names (e.g. diagnosis_date instead of date), we need to map them.
-      // For now assuming the keys returned match what we use or we adjust usage.
-      // Let's assume the DB has 'diagnosis_date' and we map it to 'date' for frontend consistency if needed, 
-      // or just use the DB columns. 
-      // Based on previous file, DB cols: diagnosis_date, condition_name, doctor_name, treatment, status, notes
-      // The new design uses: title, record_type, date, doctor_name, clinic_name, diagnosis
-
-      // Since I can't change the DB schema easily here, I will map the new UI fields to existing DB fields where possible,
-      // or strictly use the existing DB schema fields in the UI.
-      // Existing DB Schema based on previous read:
-      // user_id, diagnosis_date, condition_name, doctor_name, treatment, status, notes
-
-      // Let's stick to the EXISTING DB SCHEMA for data saving to avoid errors, 
-      // but wrap them in the new UI cards.
 
       if (error) throw error;
       setRecords(data || []);
@@ -98,6 +96,16 @@ export default function EyeChronicle() {
       toast({ title: "Error", description: "You must be logged in to add a record", variant: "destructive" });
       return;
     }
+
+    if (!managementConsent) {
+      toast({
+        title: "Consent required",
+        description: "You need to enable 'Data Management' in Settings to save your history.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!selectedDate) {
       console.error("No date selected");
       toast({ title: "Error", description: "Please select a date", variant: "destructive" });
