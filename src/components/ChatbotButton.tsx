@@ -67,7 +67,7 @@ export const ChatbotButton = () => {
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        className="w-[350px] sm:w-[400px] h-[500px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-lg"
+                        className="w-[calc(100vw-2rem)] xs:w-[350px] sm:w-[400px] h-[500px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-lg"
                     >
                         {/* Header */}
                         <div className="p-4 bg-blue-600 text-white flex items-center justify-between shadow-lg">

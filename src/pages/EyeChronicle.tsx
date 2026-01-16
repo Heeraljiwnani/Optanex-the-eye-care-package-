@@ -247,7 +247,7 @@ export default function EyeChronicle() {
               </DialogContent>
             </Dialog>
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-lg text-muted-foreground">
             {t("eyechronicle_subtitle")}
           </p>
         </div>
