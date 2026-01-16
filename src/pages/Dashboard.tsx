@@ -90,39 +90,94 @@ export default function Dashboard() {
     }
   }, [user]);
 
+  const calculateHealthScore = (screeningData: any[], eyePowerData: any[]) => {
+    let score = 0;
+    let weights = { screening: 0.6, checkup: 0.2, stability: 0.2 };
+
+    // 1. Screening Component (60%)
+    if (screeningData && screeningData.length > 0) {
+      // Get the latest result for each unique test type
+      const latestTests = new Map();
+      screeningData.forEach(test => {
+        if (!latestTests.has(test.test_type)) {
+          latestTests.set(test.test_type, test.risk_level);
+        }
+      });
+
+      let testScores: number[] = [];
+      latestTests.forEach((risk) => {
+        if (risk === 'low') testScores.push(100);
+        else if (risk === 'medium') testScores.push(65);
+        else if (risk === 'high') testScores.push(30);
+      });
+
+      const avgTestScore = testScores.reduce((a, b) => a + b, 0) / testScores.length;
+      score += avgTestScore * weights.screening;
+    } else {
+      score += 50 * weights.screening; // Neutral starting point
+    }
+
+    // 2. Checkup Regularity (20%)
+    if (eyePowerData && eyePowerData.length > 0) {
+      const lastCheckup = new Date(eyePowerData[0].checkup_date);
+      const monthsSince = (new Date().getTime() - lastCheckup.getTime()) / (1000 * 60 * 60 * 24 * 30);
+
+      if (monthsSince <= 6) score += 100 * weights.checkup;
+      else if (monthsSince <= 12) score += 70 * weights.checkup;
+      else score += 40 * weights.checkup;
+    } else {
+      score += 20 * weights.checkup; // Penalty for no checkups
+    }
+
+    // 3. Vision Stability (20%) - Compare latest two records
+    if (eyePowerData && eyePowerData.length >= 2) {
+      const latest = eyePowerData[0];
+      const previous = eyePowerData[1];
+      const diff = Math.abs((latest.left_eye_power || 0) - (previous.left_eye_power || 0)) +
+        Math.abs((latest.right_eye_power || 0) - (previous.right_eye_power || 0));
+
+      if (diff === 0) score += 100 * weights.stability;
+      else if (diff <= 0.5) score += 80 * weights.stability;
+      else if (diff <= 1.0) score += 60 * weights.stability;
+      else score += 40 * weights.stability;
+    } else {
+      score += 70 * weights.stability; // Neutral if only one record
+    }
+
+    return Math.round(score);
+  };
+
   const fetchDashboardStats = async () => {
     try {
-      // Fetch latest eye power record
+      // Fetch latest eye power records for stability comparison
       const { data: eyePowerData } = await supabase
         .from('eye_power_records')
         .select('*')
         .eq('user_id', user?.id)
         .order('checkup_date', { ascending: false })
-        .limit(1);
+        .limit(2);
 
-      // Get last checkup date in same format as Optitrack
+      // Get last checkup date text
       const getLastCheckupText = () => {
         if (!eyePowerData?.[0]?.checkup_date) return "No checkups yet";
-
         const checkupDate = new Date(eyePowerData[0].checkup_date);
         return format(checkupDate, "MMM dd, yyyy");
       };
 
-      // Fetch screening results for health score
+      // Fetch all recent screening results to calculate comprehensive score
       const { data: screeningData } = await supabase
         .from('screening_results')
         .select('*')
         .eq('user_id', user?.id)
-        .order('test_date', { ascending: false })
-        .limit(1);
+        .order('test_date', { ascending: false });
+
+      const healthScoreValue = calculateHealthScore(screeningData || [], eyePowerData || []);
 
       setStats({
         lastCheckup: getLastCheckupText(),
         eyePower: eyePowerData?.[0] ?
           `${eyePowerData[0].left_eye_power || 0} / ${eyePowerData[0].right_eye_power || 0} D` : "No data",
-        healthScore: screeningData?.[0]?.risk_level === 'low' ? "95%" :
-          screeningData?.[0]?.risk_level === 'medium' ? "75%" :
-            screeningData?.[0]?.risk_level === 'high' ? "45%" : "No data"
+        healthScore: healthScoreValue > 0 ? `${healthScoreValue}%` : "No data"
       });
     } catch (error) {
       console.error('Error fetching dashboard stats:', error);
@@ -261,7 +316,7 @@ export default function Dashboard() {
               whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
             >
               <Card
-                className="group hover:shadow-custom-lg transition-all duration-300 border-0 bg-[hsl(var(--gradient-card))] text-black h-full cursor-pointer"
+                className="group hover:shadow-custom-lg transition-all duration-300 border-0 bg-[hsl(var(--gradient-card))] text-foreground h-full cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
                   if (clickTimeoutRef.current) {
@@ -292,7 +347,9 @@ export default function Dashboard() {
                       {feature.stats}
                     </span>
                   </div>
-                  <CardTitle className="text-lg group-hover:text-dashboard transition-colors">{feature.title}</CardTitle>
+                  <CardTitle className="text-lg transition-all duration-300 group-hover:text-blue-600 group-hover:translate-x-1 flex items-center gap-2">
+                    {feature.title}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0">
                   <p className="text-muted-foreground mb-4">{feature.description}</p>

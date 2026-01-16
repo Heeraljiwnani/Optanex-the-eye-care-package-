@@ -260,7 +260,7 @@ export default function PrescriptTracker() {
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="text-left space-y-1">
             <h1 className="text-2xl sm:text-4xl font-bold text-foreground flex items-center gap-2 flex-wrap">
-              <Link to="/" className="hover:text-primary transition-colors">{t("dashboard")}</Link>
+              <Link to="/" className="hover:text-blue-600 transition-colors">{t("dashboard")}</Link>
               <span className="text-muted-foreground">›</span>
               <span className="text-gradient-head">{t("prescripttracker_title")}</span>
             </h1>

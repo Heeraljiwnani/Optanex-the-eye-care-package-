@@ -228,7 +228,7 @@ export default function EyeChronicle() {
       >
         <div className="space-y-1">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gradient-head flex items-center gap-2 flex-wrap">
-            <Link to="/" className="hover:text-primary transition-colors">{t("dashboard")}</Link>
+            <Link to="/" className="hover:text-blue-600 transition-colors">{t("dashboard")}</Link>
             <span className="text-muted-foreground">›</span>
             {t("eyechronicle_title")}
             <Dialog>
