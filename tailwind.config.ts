@@ -14,6 +14,7 @@ export default {
 			center: true,
 			padding: '2rem',
 			screens: {
+				'xs': '480px',
 				'2xl': '1400px'
 			}
 		},
@@ -124,7 +125,7 @@ export default {
 				glow: {
 					'0%, 100%': { boxShadow: '0 0 8px rgba(59,130,246,0.4)' },
 					'50%': { boxShadow: '0 0 16px rgba(59,130,246,0.8)' },
-				  },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',

@@ -257,25 +257,22 @@ export default function PrescriptTracker() {
         animate={{ opacity: 1, y: 0 }}
         className="space-y-4"
       >
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="text-left space-y-1">
-            <h1 className="text-4xl font-bold text-foreground flex items-center gap-2">
-              <Link to="/">{t("dashboard")}</Link>
+            <h1 className="text-2xl sm:text-4xl font-bold text-foreground flex items-center gap-2 flex-wrap">
+              <Link to="/" className="hover:text-primary transition-colors">{t("dashboard")}</Link>
               <span className="text-muted-foreground">›</span>
               <span className="text-gradient-head">{t("prescripttracker_title")}</span>
-
             </h1>
 
-            <p className="text-lg text-muted-foreground max-w-2xl">
+            <p className="text-sm sm:text-lg text-muted-foreground max-w-2xl">
               {t("prescripttracker_subtitle")}
             </p>
-
           </div>
 
-          <Button onClick={() => setShowUploadForm(true)} className="gap-2" variant="secondary">
+          <Button onClick={() => setShowUploadForm(true)} className="w-full sm:w-auto gap-2" variant="secondary">
             <Upload className="h-5 w-5" />
             {t("upload_prescription")}
-
           </Button>
         </div>
       </motion.div>

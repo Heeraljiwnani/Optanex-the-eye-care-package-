@@ -183,7 +183,7 @@ export default function Optiscreen() {
           </Dialog>
         </h1>
 
-        <p className="text-lg text-muted-foreground max-w-2xl">
+        <p className="text-sm sm:text-lg text-muted-foreground max-w-2xl">
           {t("desc1")}
         </p>
       </motion.div>

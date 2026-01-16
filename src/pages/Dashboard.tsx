@@ -189,13 +189,13 @@ export default function Dashboard() {
             {t("heroDescription")}
           </p>
 
-          <div className="flex flex-wrap gap-4">
-            <Button size="lg" variant="secondary" asChild className="sm:w-auto">
+          <div className="flex flex-col xs:flex-row gap-4">
+            <Button size="lg" variant="secondary" asChild className="w-full xs:w-auto">
               <Link to="/optiscreen">
                 {t("startbutton")} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="glass" asChild className="sm:w-auto">
+            <Button size="lg" variant="glass" asChild className="w-full xs:w-auto">
               <Link to="/optitrack">
                 {t("manageCare")} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>

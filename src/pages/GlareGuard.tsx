@@ -131,9 +131,8 @@ export default function GlareGuard() {
                 </div>
               </DialogContent>
             </Dialog>
-
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">{t("glareguard_subtitle")}</p>
+          <p className="text-sm sm:text-lg text-muted-foreground max-w-2xl">{t("glareguard_subtitle")}</p>
         </div>
       </motion.div>
       {isActive && (

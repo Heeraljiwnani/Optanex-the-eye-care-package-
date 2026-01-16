@@ -83,17 +83,17 @@ export function Layout({ children }: LayoutProps) {
                       onClick={() =>
                         i18n.changeLanguage(i18n.language === "en" ? "hi" : "en")
                       }
-                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 text-white dark:text-white"
+                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3"
                     >
-                      <Languages className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
-                      <span className="text-xs sm:text-sm">{i18n.language === "en" ? "हिंदी" : "EN"}</span>
+                      <Languages className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="text-[10px] xs:text-xs sm:text-sm">{i18n.language === "en" ? "हिंदी" : "EN"}</span>
                     </Button>
 
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground border border-gray-500/50 rounded-full px-2 sm:px-4 py-1 sm:py-1.5 bg-black/5 dark:bg-white/5 cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                        <div className="flex items-center gap-1 sm:gap-2 text-[10px] xs:text-xs sm:text-sm text-muted-foreground border border-border rounded-full px-2 sm:px-4 py-1 sm:py-1.5 bg-black/5 dark:bg-white/5 cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
                           <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                          <span className="max-w-[100px] sm:max-w-[150px] truncate hidden xs:inline-block">{user.email}</span>
+                          <span className="max-w-[70px] xs:max-w-[100px] sm:max-w-[150px] truncate hidden xs:inline-block">{user.email}</span>
                           <ChevronDown className="h-3 w-3 opacity-50" />
                         </div>
                       </DropdownMenuTrigger>
