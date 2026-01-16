@@ -250,7 +250,7 @@ export default function Optiscreen() {
     text-xl
     text-black
     transition-all duration-300 ease-out
-    group-hover:text-gray-400 dark:group-hover:text-gray-500
+    group-hover:text-dashboard dark:group-hover:text-dashboard
 
     group-hover:drop-shadow-[0_1px_3px_rgba(0,0,0,0.15)]
   "

@@ -292,7 +292,7 @@ export default function Dashboard() {
                       {feature.stats}
                     </span>
                   </div>
-                  <CardTitle className="text-lg">{feature.title}</CardTitle>
+                  <CardTitle className="text-lg group-hover:text-dashboard transition-colors">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0">
                   <p className="text-muted-foreground mb-4">{feature.description}</p>
