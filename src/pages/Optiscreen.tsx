@@ -157,7 +157,7 @@ export default function Optiscreen() {
         className="text-left space-y-1"
       >
         <h1 className="text-2xl sm:text-4xl font-bold text-foreground flex items-center gap-2 flex-wrap">
-          <Link to="/" className="hover:text-primary transition-colors">
+          <Link to="/" className="hover:text-blue-600 transition-colors">
             {t("dashboard")}
           </Link>
 
@@ -245,16 +245,7 @@ export default function Optiscreen() {
                       </Badge>
                     </div>
                   </div>
-                  <CardTitle
-                    className="
-    text-xl
-    text-black
-    transition-all duration-300 ease-out
-    group-hover:text-dashboard dark:group-hover:text-dashboard
-
-    group-hover:drop-shadow-[0_1px_3px_rgba(0,0,0,0.15)]
-  "
-                  >
+                  <CardTitle className="text-xl text-foreground transition-all duration-300 group-hover:text-blue-600 group-hover:translate-x-1">
                     {test.title}
                   </CardTitle>
 
