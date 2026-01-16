@@ -83,7 +83,7 @@ export function Layout({ children }: LayoutProps) {
                       onClick={() =>
                         i18n.changeLanguage(i18n.language === "en" ? "hi" : "en")
                       }
-                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3"
+                      className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 dark:text-white"
                     >
                       <Languages className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       <span className="text-[10px] xs:text-xs sm:text-sm">{i18n.language === "en" ? "हिंदी" : "EN"}</span>
@@ -117,7 +117,7 @@ export function Layout({ children }: LayoutProps) {
 
               {/* Main Content */}
               {/* Main Content */}
-              <main className="flex-1 overflow-auto">
+              <main className="flex-1 overflow-auto bg-background text-foreground transition-all duration-500">
                 {children}
               </main>
 

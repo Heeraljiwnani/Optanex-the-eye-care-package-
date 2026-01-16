@@ -189,15 +189,17 @@ export default function Dashboard() {
             {t("heroDescription")}
           </p>
 
-          <div className="flex flex-col xs:flex-row gap-4">
-            <Button size="lg" variant="secondary" asChild className="w-full xs:w-auto">
-              <Link to="/optiscreen">
-                {t("startbutton")} <ArrowRight className="ml-2 h-5 w-5" />
+          <div className="flex flex-wrap gap-3 sm:gap-4 mt-6">
+            <Button size="lg" variant="secondary" asChild className="w-full sm:w-auto h-auto min-h-[48px] py-3 px-6 whitespace-normal">
+              <Link to="/optiscreen" className="flex items-center justify-center gap-2">
+                <span className="text-center">{t("startbutton")}</span>
+                <ArrowRight className="h-5 w-5 shrink-0" />
               </Link>
             </Button>
-            <Button size="lg" variant="glass" asChild className="w-full xs:w-auto">
-              <Link to="/optitrack">
-                {t("manageCare")} <ArrowRight className="ml-2 h-5 w-5" />
+            <Button size="lg" variant="glass" asChild className="w-full sm:w-auto h-auto min-h-[48px] py-3 px-6 whitespace-normal">
+              <Link to="/optitrack" className="flex items-center justify-center gap-2">
+                <span className="text-center">{t("manageCare")}</span>
+                <ArrowRight className="h-5 w-5 shrink-0" />
               </Link>
             </Button>
           </div>
@@ -298,7 +300,7 @@ export default function Dashboard() {
                     variant="outline"
                     className="w-full text-white mt-auto"
                   >
-                    {t("open")}{feature.title} <ArrowRight className="ml-2 h-4 w-4 text-white" />
+                    {t("open")} {feature.title} <ArrowRight className="ml-2 h-4 w-4 text-white" />
                   </Button>
                 </CardContent>
               </Card>
