@@ -44,7 +44,7 @@ export default function Optiscreen() {
         t("dr_symptom_5")
       ],
       duration: "3-5 minutes",
-      accuracy: "95%",
+      accuracy: "85.27%",
       verbalAlertKey: "diabetic_retinopathy_verbal_alert"
     },
     {
@@ -61,7 +61,7 @@ export default function Optiscreen() {
         t("md_symptom_5")
       ],
       duration: "4-6 minutes",
-      accuracy: "92%",
+      accuracy: "96.17%",
       verbalAlertKey: "macular_degeneration_verbal_alert"
 
     },
