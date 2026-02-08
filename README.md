@@ -62,11 +62,11 @@ Existing tools are fragmented, lack AI support, and don’t provide personalized
 - **Frontend**: React.js (PWA)  
 - **Backend & API**: FastAPI, Supabase API  
 - **ML Frameworks**: TensorFlow, Keras, Scikit-learn  
-- **Models**: EfficientNetB0, CNN, Swin Transformers  
+- **Models**: EfficientNetB3, CNN, Swin Transformers, MobileNetV2
 - **Image Processing**: OpenCV  
 - **Data Handling**: Pandas  
 - **Explainability**: Grad-CAM  
-- **External APIs**: OpenAI model API  
+- **External APIs**: OpenAI model API, Gemini API  
 
 ---
 
