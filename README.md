@@ -151,15 +151,12 @@ OptaNex can be installed on **desktop** and **mobile** like a native app.
 
 ##  Team
 
-* **Supervisor**: Dr. Pratosh Kumar Pal
-
----
-
 * **Members**:
 
-  * Pankhuri Shrivastava (24BHI10005)
-  * Heeral Jiwnani (24BHI10009)
-  * Siya Sanjit Sawant Dessai (24BHI10083)
+  * Heeral Jiwnani
+  * Apoorv Gupta
+  * Mridul Jaiswal
+  * Sachi Jha
  
 
 ---
